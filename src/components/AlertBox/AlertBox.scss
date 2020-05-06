@@ -1,0 +1,30 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+.alert-box {
+  margin: auto;
+  margin-left: 0;
+	padding: 30px;
+	position: relative;
+  height: $alert-box--height;
+  width: $alert-box--width;
+	background-color: $alert-box--background-color;
+	text-align: left;
+	border-radius: $alert-box--border-radius;
+	display: flex;
+
+	button {
+		position: absolute;
+		-webkit-appearance: none;
+		background-color: transparent;
+		border: none;
+		top: 5px;
+		right: 15px;
+		font-size: 20pt;
+	}
+
+	p {
+		margin: auto;
+		margin-left: 0;
+	}
+}

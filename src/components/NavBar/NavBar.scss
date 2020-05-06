@@ -1,0 +1,91 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+nav {
+	height: $navbar--height;
+	line-height: $navbar--height;
+	padding: 0px 20px;
+  width: $navbar--width;
+  position: fixed;
+  text-align: left;
+  z-index: 100;
+	top: 0;
+	display: flex;
+
+  & > i {
+    cursor: pointer;
+    position: relative;
+		top: 15px;
+		left: 10px;
+		font-size: 21px !important;
+		font-weight: lighter;
+		color: white;
+	}
+
+	.navbar__item {
+		width: $navbar__item--width;
+		height: $navbar--height;
+		line-height: calc(( #{$navbar--height} ) / 2) !important;
+		text-align: center;
+		vertical-align: middle;
+		padding-left: 20px;
+		padding-right: 30px;
+		position: relative;
+		cursor: pointer;
+
+		p {
+			font-size: 13pt;
+			font-style: bold;
+		}
+
+		i {
+			content: '';
+			margin-top: -4px;
+			height: 100%;
+			top: calc(( #{$navbar--height} ) / 2) !important;
+			right: 40px;
+			width: 0;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 10px;
+		}
+
+		&:nth-of-type(1) {
+			margin-left: 20px;
+		}
+
+		.navbar__item-dropdown-list {
+			background-color: white;
+			height: fit-content;
+			position: absolute;
+			width: 300px;
+			left: 0px;
+			border-left: 1px solid #00000012;
+			border-right: 1px solid #00000012;
+			border-bottom: 1px solid #00000012;
+
+			.navbar__sub-item {
+				-webkit-transition: box-shadow 0.25s, border 0.15s;
+				-moz-transition: box-shadow 0.25s, border 0.15s;
+				-o-transition: box-shadow 0.25s, border 0.15s;
+				transition: box-shadow 0.25s, border 0.15s;
+				min-height: 60px;
+				line-height: 60px;
+			}
+			.navbar__sub-item:hover {
+				border-radius: 4px;
+				-webkit-box-shadow: inset 0 1px 20px rgba(0, 0, 0, .06);
+				box-shadow: inset 0 1px 20px rgba(0, 0, 0, .06);
+				background-color: white;
+				color: black;
+				left: 0px;
+			}
+		}
+	}
+}
+
+// EXPORTS
+:export {
+	navbarHeight: $navbar--height;
+	navbarColor: $navbar--background-color;
+}

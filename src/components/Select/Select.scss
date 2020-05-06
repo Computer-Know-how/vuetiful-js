@@ -1,0 +1,21 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+.select__container {
+  font-size: $input-text--font-size;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  max-width: 200px;
+  height: 30px;
+  border-radius: 3px;
+	margin-right: 20px;
+	transition: border-color .2s ease;
+  min-width: 205.95px;
+	min-height: 31.95px;
+	z-index: 2;
+
+	i {
+		position: relative;
+		left: 180px;
+		top: 0px;
+	}
+}

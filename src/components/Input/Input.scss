@@ -1,0 +1,61 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+.input__container{
+	position: relative;
+}
+
+input {
+  font-size: $input-text--font-size;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+	height: 30px;
+	width: 200px;
+  border-radius: 3px;
+	margin-right: 20px;
+	transition: border-color .2s ease;
+	padding-left: $input-text--padding-left;
+
+	&:hover,
+	&:focus,
+	&:active{
+		outline: 0;
+	}
+
+	&.prefix{
+		padding-left: 30px;
+	}
+}
+
+.input__prefix{
+  position: absolute;
+  height: 100%;
+  left: 5px;
+  top: 0;
+  text-align: center;
+  color: #C0C4CC;
+  transition: all 0.3s;
+}
+
+i.icon{
+  height: 100%;
+  width: 25px;
+  transition: all 0.3s;
+  line-height: 28px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: baseline;
+  font-weight: 400;
+}
+i.icon:after {
+  content: '';
+  height: 100%;
+  width: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.vue-input::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}

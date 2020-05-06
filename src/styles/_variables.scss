@@ -1,0 +1,199 @@
+//
+// Variables
+// --------------------------------------------------
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+$gray-base: #000 !default;
+$gray-darker: lighten($gray-base, 13.5%) !default;
+$gray-dark: lighten($gray-base, 20%) !default;
+$gray: lighten($gray-base, 33.5%) !default;
+$gray-light: lighten($gray-base, 46.7%) !default;
+$gray-lighter: lighten($gray-base, 93.5%) !default;
+
+$brand-primary: darken(#428bca, 6.5%) !default;
+$brand-success: #5cb85c !default;
+$brand-info: #5bc0de !default;
+$brand-warning: #f0ad4e !default;
+$brand-danger: #d9534f !default;
+
+$blue: #0275db !default;
+$blue-darker: darken(#0275db, 6.5%) !default;
+$blue-dark: darken(#0275db, 20%) !default;
+$blue-secondary: #21579E;
+
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+//** Background color for `<body>`.
+$body-bg: #fff !default;
+//** Global text color on `<body>`.
+$text-color: $gray-dark !default;
+
+//** Global textual link color.
+$link-color: $brand-primary !default;
+//** Link hover color set via `darken()` function.
+$link-hover-color: darken($link-color, 15%) !default;
+//** Link hover decoration.
+$link-hover-decoration: underline !default;
+
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif: Georgia, "Times New Roman", Times, serif !default;
+// Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace !default;
+$font-family-base: $font-family-sans-serif !default;
+
+$font-size-base: 14px !default;
+$font-size-large: ceil(($font-size-base * 1.25)) !default;
+$font-size-small: ceil(($font-size-base * 0.85)) !default;
+
+// Default font styling
+$font-weight-base: 400 !default;
+$line-height-base: 1.5 !default;
+
+$font-size-h1: floor(($font-size-base * 2.3)) !default;
+$font-size-h2: floor(($font-size-base * 2.15)) !default;
+$font-size-h3: ceil(($font-size-base * 1.7)) !default;
+$font-size-h4: ceil(($font-size-base * 1.25)) !default;
+$font-size-h5: $font-size-base !default;
+$font-size-h6: ceil(($font-size-base * 0.85)) !default;
+
+$line-height-base: 1.428571429 !default; // 20/14
+$line-height-computed: floor(($font-size-base * $line-height-base)) !default;
+
+$headings-font-family: inherit !default;
+$headings-font-weight: 500 !default;
+$headings-line-height: 1.1 !default;
+$headings-color: inherit !default;
+
+// Page Title
+$page-title--margin-top: 80px;
+
+// Input text
+$input-text--padding-left: 8px;
+$input-text--font-size: 10pt;
+
+
+//== NavBar
+//
+//##
+$navbar--height: 50px;
+$navbar--width: 100%;
+$navbar--background-color: $blue-dark;
+
+//NavBar item
+$navbar__item--width: fit-content;
+
+//== SideBar
+//
+//##
+$sidebar--height: 100%;
+$sidebar--width: 220px;
+$sidebar--color: #f2f2f2;
+
+// Sidebar list
+$sidebar__list--margin-top: 20px;
+$sidebar__list--margin-left: -20px;
+
+// Sidebar list item
+$sidebar__item--margin-bottom: 20px;
+$sidebar__item--height: 30px;
+$sidebar__item--width: 170px;
+
+
+//== PopUp
+//
+//##
+$popup--height: fit-content;
+$popup--width: 500px;
+
+// PopUp Button
+$popup__btn--padding-left: 15px;
+$popup__btn--padding-right: 15px;
+$popup__btn-border--width: 2px;
+$popup__btn--color: #0275db;
+
+
+//== AlertPopUp
+//
+//##
+$alert-popup--background-color: #db441a;
+$alert-popup--color: #db441a;
+$alert-popup--active-color: #be3c17;
+$alert-popup--height: 400px;
+$alert-popup--width: 500px;
+
+// AlertPopUp Image
+$alert-popup__img--width: 100px;
+
+// AlertPopUp Button
+$alert-popup__btn--width: 80%;
+$alert-popup__btn--padding-right: 15px;
+$alert-popup__btn--margin-top: 15px;
+$alert-popup__btn--color: #ffffff;
+
+
+//== AlertBox
+//
+//##
+$alert-box--background-color: #ff001559;
+$alert-box--border-radius: 12px;
+$alert-box--height: 100px;
+$alert-box--width: 500px;
+
+
+//== SearchForm
+//
+//##
+// SearchForm Field
+$search-form__field--height: 90px;
+$search-form__field--min-width: 227.95px;
+
+// SearchForm
+$search-form--height: fit-content;
+$search-form--padding: 30px;
+$search-form--margin: 30px;
+$search-form--width: $search-form__field--min-width * 5 + 75px;
+$search-form--mobile-width: 200px;
+
+// SearchForm Button
+$search-form__btn--width: 207.95px;
+$search-form__btn--mobile-height: 40px;
+$search-form__btn--mobile-width: 80px;
+
+
+//== Table
+//
+//##
+$table--border-color: grey;
+$table--border-right-width: 1px;
+$table--border-left-width: 1px;
+$table--hover-color: #f5f7fa;
+$table--striped-color: #f9f9f9;
+
+// Table cell
+$table__cell--font-size: 13px;
+$table__cell--padding: 10px;
+$table__cell--font-color: $gray;
+$table__cell-content--min-width: 12px;
+$table__cell-content--min-height: 10px;
+$table__cell-content--text-align: left;
+
+// Table tool
+$tools__tools--search--width: 280px;
+
+
+//== Checkbox
+//
+//##
+$checkbox--dimensions: 19px;
+$checkbox--color: $blue;
+$checkbox--border-color: black;
+$checkbox--border-width: 1px;
+$checkbox--border-radius: 2px;

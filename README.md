@@ -1,2 +1,11 @@
-# vuetiful-js
-A collection library of custom dynamic Vue components.
+# Vuetiful Component Library
+
+## Using Vuetiful
+
+Currently, Vuetiful installs as a complete library that can be pulled from npm or github.
+
+Install the library with NPM:
+
+```bash
+npm install vuetiful
+```

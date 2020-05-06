@@ -1,0 +1,37 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+.alert-popup {
+  margin: auto;
+  padding: 30px;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  height: $alert-popup--height;
+  width: $alert-popup--width;
+	background-color: white;
+	text-align: center;
+}
+
+.popup__img--alert {
+  width: $alert-popup__img--width;
+  margin: 20px;
+}
+
+.popup__message--alert {
+  color: $alert-popup--color;
+  width: 100%;
+}
+
+.popup__btn--alert {
+  width: $alert-popup__btn--width;
+  background-color: $alert-popup--background-color;
+  margin-top: $alert-popup__btn--margin-top;
+  color: $alert-popup__btn--color;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $alert-popup--active-color;
+    color: white;
+  }
+}
