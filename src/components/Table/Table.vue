@@ -739,7 +739,7 @@ export default {
 
 			if (this.tableData && populatedArray(this.tableData.rows)) {
 				const indices = [];
-				this.tableData.rows.forEach((row, index) => { if (row.selected) indices.push(row.index); });
+				this.tableData.rows.forEach((row) => { if (row.selected) indices.push(row.index); });
 
 				return indices;
 			}
@@ -906,7 +906,6 @@ export default {
 			const row = document.querySelector(`#table__row-${rowIndex}`);
 			row.style.height = `${cell.data.length*40}px`;
 			row.children[1].children[0].style.display = 'none';
-			row.children[8].children[0].style.marginTop = `${(cell.data.length-1)*20}px`;
 			document.querySelector(`#table__cell-${cellIndex}`).style.overflowY = 'hidden';
 
 			return;
