@@ -36,6 +36,7 @@
 					:key="childItem.slug"
 					:id="childItem.slug"
 					:style="{ top: height }"
+					@click="redirect(childItem.location)"
 					class="navbar__sub-item"
 				>
 					{{ childItem.label }}
@@ -60,6 +61,9 @@ export default {
 		};
 	},
 	methods: {
+		redirect(url) {
+			this.$emit('redirect', url);
+		},
 		toggleSideBar() {
 			this.sideBarOpen = this.sideBarOpen ? false : true;
 			this.$emit('toggleSideBar', this.sideBarOpen);
