@@ -142,7 +142,7 @@
 		</div>
 
 		<quick-peek
-			v-if="this.quickPeekArr.length"
+			v-if="quickPeekEnabled && quickPeekArr.length"
 			:quickPeekArr="quickPeekArr"
 			:headers="quickPeekHeaders"
 			:data="quickPeekHeaders.reduce((agg, cur, idx) => { agg[cur] = this.quickPeekArr[0][idx]; return agg; }, {})"
@@ -906,6 +906,7 @@ export default {
 			const row = document.querySelector(`#table__row-${rowIndex}`);
 			row.style.height = `${cell.data.length*40}px`;
 			row.children[1].children[0].style.display = 'none';
+			row.children[8].children[0].style.marginTop = `${(cell.data.length-1)*20}px`;
 			document.querySelector(`#table__cell-${cellIndex}`).style.overflowY = 'hidden';
 
 			return;
