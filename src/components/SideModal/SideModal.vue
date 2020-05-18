@@ -25,5 +25,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './RightSideBar.scss';
+@import './SideModal.scss';
 </style>
