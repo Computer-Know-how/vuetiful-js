@@ -1,0 +1,25 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+.right-sidebar {
+  position: absolute;
+  right: 0;
+  background-color: black;
+  /* Top spacing must be equal to navbar--height to prevent over-lapping */
+	/*top: $navbar--height;
+	z-index: 100;
+  height: $right-side-bar--height;
+  width: $right-side-bar--width; */
+	/* background-color: $right-side-bar--color;*/
+	/* Offset the right-side-bar by it's width, this will move the right-side-bar out of the viewport
+    and allow for animation back into the viewport */
+	/* left: -$right-side-bar--width; */
+}
+.right-side-bar.hidden {
+  animation: slide-out 0.2s backwards;
+	-webkit-animation: slide-out 0.2s backwards;
+}
+.right-side-bar.visible {
+  animation: slide-in 0.2s backwards;
+	-webkit-animation: slide-in 0.2s backwards;
+}
