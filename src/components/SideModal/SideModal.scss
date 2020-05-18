@@ -1,13 +1,27 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/global.scss';
 
-.right-sidebar {
+.sidebar-container {
   position: absolute;
-  right: 0;
-  background-color: black;
+  background-color: white;
+  height: 1000px;
+  width: 500px;
+  z-index: 100;
+  top: $navbar--height !important;
+  &.sidebar-right {
+    right: 0;
+  }
+  &.sidebar-left {
+    left: 0;
+  }
+  #something {
+    margin-top: $navbar--height !important;
+    height: 100%;
+    width: 100%;
+  }
   /* Top spacing must be equal to navbar--height to prevent over-lapping */
 	/*top: $navbar--height;
-	z-index: 100;
+
   height: $right-side-bar--height;
   width: $right-side-bar--width; */
 	/* background-color: $right-side-bar--color;*/

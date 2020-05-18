@@ -1,12 +1,15 @@
 <template>
-	<div class="right-sidebar">
+	<div :class="`sidebar-${position}`" class="sidebar-container">
+		<slot id="something"></slot>
 	</div>
 </template>
 
 <script>
 export default {
-	name: 'vuetiful-right-side-bar',
-	props: {},
+	name: 'vuetiful-side-modal',
+	props: {
+		position: {type: String, default: 'right'}
+	},
 	methods: {
 		redirect(location, activeSlug) {
 
