@@ -1,6 +1,6 @@
 <template>
 	<div :class="`sidebar-${position}`" class="sidebar-container">
-		<slot id="something"></slot>
+		<slot id="content"></slot>
 	</div>
 </template>
 
