@@ -1,23 +1,24 @@
 <template>
-		<div class="search-form">
-				<h2>Search Parameters:</h2>
-				<div class="search-form__container">
-						<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
-								<label>{{ field.label }}</label>
-								<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
-								<select-field v-else :items="field.items"></select-field>
-						</div>
-				</div>
+	<div class="search-form">
+			<h2>{{ headerText }}</h2>
+			<div class="search-form__container">
+					<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
+							<label>{{ field.label }}</label>
+							<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
+							<select-field v-else :items="field.items"></select-field>
+					</div>
+			</div>
 
-				<search-checkbox>
-					<label slot="label">{{ checkboxText }}</label>
-				</search-checkbox>
+			<search-checkbox v-if="checkboxText">
+				<label slot="label">{{ checkboxText }}</label>
+			</search-checkbox>
 
-				<div class="btn__container">
-						<button class="btn --primary" v-on:click="searchFunc(oFormFields)">Search</button>
-						<button class="btn --secondary"><span>Clear Search Fields</span></button>
-				</div>
-		</div>
+			<div class="btn__container">
+				<button class="btn --primary" v-on:click="searchFunc(oFormFields)">Search</button>
+				<button v-if="headerText !== 'Advanced Search'" class="btn --primary" v-on:click="advancedSearchFunc(oFormFields)">Advanced Search</button>
+				<button class="btn --secondary"><span>Clear Search Fields</span></button>
+			</div>
+	</div>
 </template>
 
 <script>
@@ -41,8 +42,10 @@ export default {
 	props: {
 		formFields: Array,
 		searchFunc: Function,
+		advancedSearchFunc: Function,
 		enableCheckbox: Boolean,
 		checkboxText: String,
+		headerText: String,
 	}
 };
 </script>
