@@ -1,20 +1,23 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
 ul.tabs__header {
-    display: block;
-    list-style: none;
-    padding: 0;
-  }
-  ul.tabs__header > li {
-    padding: 15px 30px;
-    border-radius: 10px;
-    margin: 0;
-    display: inline-block;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  ul.tabs__header > li.tab__selected {
-    font-weight: bold;
-    border-radius: 10px 10px 0 0;
-    border-bottom: 8px solid transparent;
-  }
-  .tab {
-  }
+	display: block;
+	list-style: none;
+	padding: 0;
+}
+ul.tabs__header > li {
+	padding: 15px 30px;
+	border-radius: 10px;
+	margin: 0;
+	height: 30px;
+	display: inline-block;
+	margin-right: 5px;
+	cursor: pointer;
+}
+ul.tabs__header > li.tab__selected {
+	font-weight: bold;
+	background-color: gray;
+	height: 50px;
+	color: white;
+}

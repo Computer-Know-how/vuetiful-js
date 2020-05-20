@@ -1,5 +1,5 @@
 <template>
-	<div class="search-form">
+	<div class="search-form" :class="narrow ? 'narrow' : ''">
 		<h2>Search Parameters:</h2>
 		<div class="search-form__container">
 			<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
@@ -9,7 +9,7 @@
 			</div>
 		</div>
 
-		<search-checkbox>
+		<search-checkbox v-if="checkboxText">
 			<label slot="label">{{ checkboxText }}</label>
 		</search-checkbox>
 
@@ -44,6 +44,7 @@ export default {
 		enableCheckbox: Boolean,
 		checkboxText: String,
 		formButtons: Array,
+		narrow: Boolean
 	}
 };
 </script>

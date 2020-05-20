@@ -14,29 +14,29 @@
 
 <script>
 export default {
-  props: {},
-  data () {
-    return {
-      selectedIndex: 0, // the index of the selected tab,
-      tabs: []         // all of the tabs
-    }
-  },
-  created () {
-    this.tabs = this.$children
-  },
-  mounted () {
-    this.selectTab(0)
-  },
-  methods: {
-    selectTab (i) {
-      this.selectedIndex = i
-      // loop over all the tabs
-      this.tabs.forEach((tab, index) => {
-        tab.isActive = (index === i)
-      })
-    }
-  }
-}
+	props: {},
+	data () {
+		return {
+			selectedIndex: 0, // the index of the selected tab,
+			tabs: []         // all of the tabs
+		};
+	},
+	created () {
+		this.tabs = this.$children;
+	},
+	mounted () {
+		this.selectTab(0);
+	},
+	methods: {
+		selectTab (i) {
+			this.selectedIndex = i;
+			// loop over all the tabs
+			this.tabs.forEach((tab, index) => {
+				tab.isActive = (index === i);
+			});
+		}
+	}
+};
 </script>
 
 <style lang='scss' scoped>
