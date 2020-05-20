@@ -18,9 +18,11 @@ import SearchForm from './components/SearchForm/SearchForm.vue';
 import Select from './components/Select/Select.vue';
 import SideBar from './components/SideBar/SideBar.vue';
 import Table from './components/Table/Table.vue';
+import Tab from './components/Tab/Tab.vue';
+import Tabs from './components/Tabs/Tabs.vue';
 
 /* Export components individually */
-export { AlertBox, AlertPopUp, Checkbox, Input, NavBar, PopUp, QuickPeek, SideModal, SearchForm, Select, SideBar, Table };
+export { AlertBox, AlertPopUp, Checkbox, Input, NavBar, PopUp, QuickPeek, SideModal, SearchForm, Select, SideBar, Table, Tab, Tabs };
 
 /* Use every component when the library is installed as a Vue plugin */
 function install(Vue) {
@@ -36,6 +38,8 @@ function install(Vue) {
 	Vue.component('vuetiful-select', Select);
 	Vue.component('vuetiful-side-bar', SideBar);
 	Vue.component('vuetiful-table', Table);
+	Vue.component('vuetiful-tab', Tab);
+	Vue.component('vuetiful-tabs', Tabs);
 }
 
 /* Export the library as a plugin */

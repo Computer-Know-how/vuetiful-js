@@ -3,7 +3,7 @@
 
 .sidebar-container {
   position: absolute;
-  background-color: white;
+  background-color: $sidebar--color;
   height: 1000px;
   width: 500px;
   z-index: 100;
@@ -29,11 +29,11 @@
     and allow for animation back into the viewport */
 	/* left: -$right-side-bar--width; */
 }
-.right-side-bar.hidden {
-  animation: slide-out 0.2s backwards;
-	-webkit-animation: slide-out 0.2s backwards;
+.sidebar-container.hidden {
+  animation: slide-in 0.2s forwards;
+	-webkit-animation: slide-in 0.2s forwards;
 }
-.right-side-bar.visible {
-  animation: slide-in 0.2s backwards;
-	-webkit-animation: slide-in 0.2s backwards;
+.sidebar-container.visible {
+  animation: slide-out 0.2s forwards;
+	-webkit-animation: slide-out 0.2s forwards;
 }

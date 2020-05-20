@@ -1,23 +1,23 @@
 <template>
-		<div class="search-form">
-				<h2>Search Parameters:</h2>
-				<div class="search-form__container">
-						<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
-								<label>{{ field.label }}</label>
-								<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
-								<select-field v-else :items="field.items"></select-field>
-						</div>
-				</div>
-
-				<search-checkbox>
-					<label slot="label">{{ checkboxText }}</label>
-				</search-checkbox>
-
-				<div class="btn__container">
-						<button class="btn --primary" v-on:click="searchFunc(oFormFields)">Search</button>
-						<button class="btn --secondary"><span>Clear Search Fields</span></button>
-				</div>
+	<div class="search-form">
+		<h2>Search Parameters:</h2>
+		<div class="search-form__container">
+			<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
+				<label>{{ field.label }}</label>
+				<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
+				<select-field v-else :items="field.items"></select-field>
+			</div>
 		</div>
+
+		<search-checkbox>
+			<label slot="label">{{ checkboxText }}</label>
+		</search-checkbox>
+
+		<div class="btn__container">
+			<button :class="button.class" class="btn" v-for="button of formButtons" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
+			<button class="btn --secondary"><span>Clear Search Fields</span></button>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -43,6 +43,7 @@ export default {
 		searchFunc: Function,
 		enableCheckbox: Boolean,
 		checkboxText: String,
+		formButtons: Array,
 	}
 };
 </script>
