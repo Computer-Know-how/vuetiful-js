@@ -17,12 +17,13 @@
     margin: $sidebar__list--margin-top $sidebar__list--margin-left;
     list-style-type: none;
     text-align: left;
+    padding-top: 4.5px;
 
     li {
       height: $sidebar__item--height;
       width: $sidebar__item--width;
       margin-bottom: $sidebar__item--margin-bottom;
-      padding-top: $sidebar__item--height * 0.25;
+      padding-top: 4.5px;
       padding-left: 20px;
       /* Top padding to push the text down in proportion to the height of the element */
       font-size: 0.9em;
@@ -32,6 +33,18 @@
     li.active {
       background-color: #e87511;
       color: #ffffff;
+    }
+    .active::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      display: block;
+      margin-left: 140px;
+      margin-top: -20px;
+      background-color: #e87511;
+      -webkit-transform: rotate(47deg) skew(5deg);
+      -moz-transform: rotate(47deg) skew(5deg);
+      transform: rotate(47deg) skew(5deg);
     }
   }
 }
