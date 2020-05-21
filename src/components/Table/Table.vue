@@ -40,11 +40,11 @@
 
 						<span class="table-sort flex-dir-column" :style="`height: ${rowHeight} `">
 							<i
-							:class="`sort--btns sort--descending ${activatedSort[j] && activatedSort[j] === 'descending' ? 'activated' : '' }`"
-							@click.stop="onSort(j, 'descending')"></i>
-							<i
 							:class="`sort--btns sort--ascending ${activatedSort[j] && activatedSort[j] === 'ascending' ? 'activated' : '' }`"
 							@click.stop="onSort(j, 'ascending')"></i>
+							<i
+							:class="`sort--btns sort--descending ${activatedSort[j] && activatedSort[j] === 'descending' ? 'activated' : '' }`"
+							@click.stop="onSort(j, 'descending')"></i>
 						</span>
 						
 						<!-- TODO: add filtering functionality -->
