@@ -12,6 +12,7 @@
 	padding: $table__cell--padding;
 	border: none;
 	position: relative;
+	background-color: #fff;
 
 	&.show-border {
 		border-top: 1px solid $table--border-color;
