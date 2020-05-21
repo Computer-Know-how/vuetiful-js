@@ -131,7 +131,6 @@
 	-ms-flex: 1;
 	flex: 1;
 	border: none;
-	display: grid;
 
 	.expand-arrow {
 		height: 30px;width: 190px;
@@ -222,12 +221,12 @@
 	}
 	.sort--ascending {
 		border-bottom-color: #c0c4cc;
-		top: 4px;
+		bottom: 2px;
 	}
 	.sort--descending {
 		border-top-color: #c0c4cc;
-		bottom: 4px;
-	}
+		top: 2px;
+	}	
 	.sort--ascending.activated {
 		border-bottom-color: #409eff;
 	}
