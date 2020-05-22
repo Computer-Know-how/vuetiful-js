@@ -2,7 +2,7 @@
 @import '../../styles/global.scss';
 
 .popup__container {
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   width: 100%;

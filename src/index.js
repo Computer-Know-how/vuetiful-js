@@ -13,6 +13,7 @@ import Input from './components/Input/Input.vue';
 import NavBar from './components/NavBar/NavBar.vue';
 import PopUp from './components/PopUp/PopUp.vue';
 import QuickPeek from './components/QuickPeek/QuickPeek.vue';
+import SideModal from './components/SideModal/SideModal.vue';
 import SearchForm from './components/SearchForm/SearchForm.vue';
 import Select from './components/Select/Select.vue';
 import SideBar from './components/SideBar/SideBar.vue';
@@ -33,6 +34,7 @@ function install(Vue) {
 	Vue.component('vuetiful-nav-bar', NavBar);
 	Vue.component('vuetiful-pop-up', PopUp);
 	Vue.component('vuetiful-quick-peek', QuickPeek);
+	Vue.component('vuetiful-side-modal', SideModal);
 	Vue.component('vuetiful-search-form', SearchForm);
 	Vue.component('vuetiful-select', Select);
 	Vue.component('vuetiful-side-bar', SideBar);

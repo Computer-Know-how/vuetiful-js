@@ -10,6 +10,7 @@
 	margin-right: auto;
 	color: $table__cell--font-color;
 	padding: $table__cell--padding;
+	background-color: white;
 	border: none;
 	position: relative;
 	background-color: #fff;
@@ -241,7 +242,7 @@
 
 	button {
 		margin-bottom: 20px !important;
-		margin-right: 0;
+		margin-right: 90px;
 		color: black;
 	}
 }
@@ -252,25 +253,24 @@
 	width: 130px;
 	background-color: black;
 	z-index: 100;
-	right: -100px;
+	right: -5px;
 	display: grid;
 
-}
+	& > .actions__action {
+		height: 50px;
+		display: flex;
+		background-color: white;;
+		min-width: 100% !important;
+		position: relative;
+		cursor: pointer;
 
-.actions__action {
-	height: 50px;
-	display: flex;
-	background-color: white;;
-	min-width: 100% !important;
-	position: relative;
-	cursor: pointer;
+		p {
+			margin: auto;
+		}
 
-	p {
-		margin: auto;
-	}
-
-	&:hover {
-		-webkit-box-shadow: inset 0 1px 20px rgba(0, 0, 0, .06);
-		box-shadow: inset 0 1px 20px rgba(0, 0, 0, .06);
+		&:hover {
+			-webkit-box-shadow: inset 0 1px 20px rgba(0, 0, 0, .06);
+			box-shadow: inset 0 1px 20px rgba(0, 0, 0, .06);
+		}
 	}
 }
