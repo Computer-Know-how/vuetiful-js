@@ -26,22 +26,47 @@
   "_spec": "git+https://github.com/Computer-Know-how/vuetiful-js.git",
   "_where": "/Users/jeremyjohnson/Sites/CDH/rb-dqm-app",
   "author": {
-    "name": "Haeven Kelley",
-    "email": "haevenshane@gmail.com"
+    "name": "Computer Know How",
+    "email": "info@compknowhow.com"
   },
   "bugs": {
     "url": "https://github.com/Haeven/vuetiful/issues"
   },
   "description": "A collection library of custom dynamic Vue components.",
+  "name": "rb-dqm-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "vue-build": "vue-cli-service build",
+    "build": "webpack --config build/webpack.config.dev.js",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.3.0",
+    "chart.js": "^2.9.3",
+    "core-js": "^3.4.4",
+    "vue": "^2.6.10",
+    "vue-chartjs": "^3.5.0",
+    "vue-router": "^3.1.5",
+    "vuetiful-js": "https://github.com/Computer-Know-how/vuetiful-js"
+  },
   "devDependencies": {
-    "@vue/cli-service": "^4.2.3",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "babel-eslint": "^10.0.3",
     "css-loader": "^3.4.2",
-    "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.13.1",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
-    "svg-inline-loader": "^0.8.2",
-    "vue-loader": "^15.9.0",
+    "style-loader": "^1.1.3",
+    "svg-inline-loader": "^0.8.0",
+    "vue-loader": "^15.8.3",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.0",
