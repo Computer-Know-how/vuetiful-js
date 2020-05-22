@@ -7,6 +7,7 @@
       @focus="handleFocus"
       @blur="handleBlur"
       @change="handleChange"
+			:value="value"
 			v-on:keydown="validate"
     />
 
