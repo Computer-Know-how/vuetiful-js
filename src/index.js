@@ -13,16 +13,16 @@ import Input from './components/Input/Input.vue';
 import NavBar from './components/NavBar/NavBar.vue';
 import PopUp from './components/PopUp/PopUp.vue';
 import QuickPeek from './components/QuickPeek/QuickPeek.vue';
-import SideModal from './components/SideModal/SideModal.vue';
 import SearchForm from './components/SearchForm/SearchForm.vue';
 import Select from './components/Select/Select.vue';
 import SideBar from './components/SideBar/SideBar.vue';
-import Table from './components/Table/Table.vue';
+import SideModal from './components/SideModal/SideModal.vue';
 import Tab from './components/Tab/Tab.vue';
+import Table from './components/Table/Table.vue';
 import Tabs from './components/Tabs/Tabs.vue';
 
 /* Export components individually */
-export { AlertBox, AlertPopUp, Checkbox, Input, NavBar, PopUp, QuickPeek, SideModal, SearchForm, Select, SideBar, Table, Tab, Tabs };
+export { AlertBox, AlertPopUp, Checkbox, Input, NavBar, PopUp, QuickPeek, SearchForm, Select, SideBar, SideModal, Tab, Table, Tabs };
 
 /* Use every component when the library is installed as a Vue plugin */
 function install(Vue) {
@@ -33,12 +33,12 @@ function install(Vue) {
 	Vue.component('vuetiful-nav-bar', NavBar);
 	Vue.component('vuetiful-pop-up', PopUp);
 	Vue.component('vuetiful-quick-peek', QuickPeek);
-	Vue.component('vuetiful-side-modal', SideModal);
 	Vue.component('vuetiful-search-form', SearchForm);
 	Vue.component('vuetiful-select', Select);
 	Vue.component('vuetiful-side-bar', SideBar);
-	Vue.component('vuetiful-table', Table);
+	Vue.component('vuetiful-side-modal', SideModal);
 	Vue.component('vuetiful-tab', Tab);
+	Vue.component('vuetiful-table', Table);
 	Vue.component('vuetiful-tabs', Tabs);
 }
 

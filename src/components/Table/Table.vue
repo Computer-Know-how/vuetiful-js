@@ -46,7 +46,6 @@
 							:class="`sort--btns sort--descending ${activatedSort[j] && activatedSort[j] === 'descending' ? 'activated' : '' }`"
 							@click.stop="onSort(j, 'descending')"></i>
 						</span>
-						
 						<!-- TODO: add filtering functionality -->
 					</div>
 				</div>
@@ -125,6 +124,16 @@
 								<button v-if="quickPeekEnabled" @click="quickPeek(tableRow.index)">quick peek</button>
 							</div>
 
+							<!-- Actions button -->
+							<div :class="`table__select--link flex-c-c ${tableBorder} actions__button`">
+								<button v-if="actionsEnabled" @click="actionsClicked(tableRow.index)">...</button>
+							</div>
+
+							<!-- Actions Modal -->
+							<div class="actions__container full-box-shadow" v-show="showAction.includes(tableRow.index)" :id="tableRow.index">
+								<span v-for="action of actionsConfig" class="actions__action" :key="action.label" @click="emitAction(action.func, tableRow.index)"><p>{{ action.label }}</p></span>
+							</div>
+
 							<!-- Row select button -->
 							<div
 								v-if="selectableRows"
@@ -142,6 +151,7 @@
 			</div>
 		</div>
 
+		<slot></slot>
 		<quick-peek
 			v-if="quickPeekEnabled && quickPeekArr.length"
 			:quickPeekArr="quickPeekArr"
@@ -177,6 +187,7 @@ export default {
 			totalPages          : 0,
 			pageSize            : 0,
 			quickPeekArr        : [],
+			showAction          : []
 		};
 	},
 	props: {
@@ -213,9 +224,12 @@ export default {
 	},
 	computed: {
 		sourceData         () { return (Array.isArray(this.params.data)) ? this.params.data : [];                                                                             },
+		visibleActions     () { return (Array.isArray(this.params.data) && this.params.actionsConfig) ? this.params.data.reduce((agg, cur, i) => { agg[i] = false; return agg; }, {}) : {};                                                                             },
 		tableBorder        () { return (this.params.border) ? 'show-border' : '';                                                                                        		 },
 		selectableRows     () { return (this.params.selectable) ? true : false;                                                                                        		 },
 		fixedColumns     () { return (this.params.fixedColumns) ? this.params.fixedColumns : [];                                                                                 },
+		actionsEnabled   () { return (this.params.actionsConfig) ? true : false;                  		 },
+		actionsConfig   () { return (this.params.actionsConfig && this.params.actionsConfig.actions) ? this.params.actionsConfig.actions : [];                  		 },
 		quickPeekEnabled   () { return (this.params.quickPeekConfig) ? true : false;                                                                                        		 },
 		quickPeekHeaders   () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.headers) ? this.params.quickPeekConfig.headers : [];                  		 },
 		quickPeekRowHeadingIndex   () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowHeadingIndex) ? this.params.quickPeekConfig.rowHeadingIndex : 0;                  		 },
@@ -886,6 +900,21 @@ export default {
 		 */
 		exitQuickPeek() {
 			this.quickPeekArr = [];
+		},
+		/**
+		 * @function - Handle action click
+		 */
+		actionsClicked(rowIndex) {
+			this.showAction.includes(rowIndex) ? this.showAction.splice(this.showAction.indexOf(rowIndex), 1) : this.showAction.push(rowIndex);
+			this.visibleActions[rowIndex] = (this.visibleActions[rowIndex]) ? false : true;
+		},
+		/**
+		 * @function - Emit action
+		 */
+		emitAction(func, rowIndex) {
+			this.showAction.splice(this.showAction.indexOf(rowIndex), 1);
+			this.visibleActions[rowIndex] = false;
+			this.$emit(func, rowIndex);
 		},
 		/**
 		 * @function - Handle quick peek

@@ -99,12 +99,14 @@ div h1 {
     border-color: $blue;
 
     &:hover, &:active, &.--toggle:focus {
+			border-color: $blue-darker !important;
       background-color: $blue-darker !important;
       color: white;
     }
 
     &.--white-fill {
       &:hover, &:active, &.--toggle:focus {
+				border-color: $blue !important;
         background-color: white !important;
         color: $blue;
       }
@@ -117,14 +119,48 @@ div h1 {
     border-color: $gray-light;
 
     &:hover, &:active, &.--toggle:focus {
+			border-color: $gray;
       background-color: $gray !important;
       color: white;
     }
 
-    &.--white--fill {
+    &.--white-fill {
       &:hover, &:active, &.--toggle:focus {
-        background-color: white;
+				background-color: white;
+				border-color: $gray-light !important;
         color: $gray-light;
+      }
+    }
+	}
+
+	&.--warning {
+    background-color: $brand-danger;
+    color: white;
+		border-color: $brand-danger;
+		
+		&.--light {
+			background-color: white !important;
+			border-color: $brand-danger !important;
+			color: $brand-danger;
+			 
+			&:hover, &:active, &.--toggle:focus {
+				border-color: $brand-danger;
+				background-color: $brand-danger !important;
+				color: white;
+			}
+		}
+
+    &:hover, &:active, &.--toggle:focus {
+			border-color: darken($brand-danger, 10%);
+      background-color: darken($brand-danger, 10%) !important;
+      color: white;
+    }
+
+    &.--white-fill {
+      &:hover, &:active, &.--toggle:focus {
+				background-color: white !important;
+				border-color: $brand-danger !important;
+        color: $brand-danger;
       }
     }
   }
