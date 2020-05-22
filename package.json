@@ -1,35 +1,89 @@
 {
-  "name": "vuetiful-js",
-  "version": "1.4.8",
-  "description": "A collection library of custom dynamic Vue components.",
-  "main": "/src/index.js",
-  "scripts": {
-    "dev": "node src/build/utils/generate-app-entry.js && vue-cli-service serve --open",
-    "build": "node src/build/build.js && webpack --config build/webpack.config.base.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
+  "_args": [
+    [
+      "git+https://github.com/Computer-Know-how/vuetiful-js.git",
+      "/Users/jeremyjohnson/Sites/CDH/rb-dqm-app"
+    ]
+  ],
+  "_from": "git+https://github.com/Computer-Know-how/vuetiful-js.git",
+  "_id": "vuetiful-js@git+https://github.com/Computer-Know-how/vuetiful-js.git#1056158f9728bd3579a6adfd64b76db75f49c994",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/vuetiful-js",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "git+ssh://github.com/Haeven/vuetiful.git"
+    "raw": "git+https://github.com/Computer-Know-how/vuetiful-js.git",
+    "rawSpec": "git+https://github.com/Computer-Know-how/vuetiful-js.git",
+    "saveSpec": "git+https://github.com/Computer-Know-how/vuetiful-js.git",
+    "fetchSpec": "https://github.com/Computer-Know-how/vuetiful-js.git",
+    "gitCommittish": null
   },
-  "author": "Haeven Kelley <haevenshane@gmail.com>",
-  "license": "MIT",
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/Computer-Know-how/vuetiful-js.git#1056158f9728bd3579a6adfd64b76db75f49c994",
+  "_spec": "git+https://github.com/Computer-Know-how/vuetiful-js.git",
+  "_where": "/Users/jeremyjohnson/Sites/CDH/rb-dqm-app",
+  "author": {
+    "name": "Computer Know How",
+    "email": "info@compknowhow.com"
+  },
   "bugs": {
     "url": "https://github.com/Haeven/vuetiful/issues"
   },
-  "homepage": "https://github.com/Haeven/vuetiful#readme",
+  "description": "A collection library of custom dynamic Vue components.",
+  "name": "rb-dqm-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "vue-build": "vue-cli-service build",
+    "build": "webpack --config build/webpack.config.dev.js",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.3.0",
+    "chart.js": "^2.9.3",
+    "core-js": "^3.4.4",
+    "vue": "^2.6.10",
+    "vue-chartjs": "^3.5.0",
+    "vue-router": "^3.1.5",
+    "vuetiful-js": "https://github.com/Computer-Know-how/vuetiful-js"
+  },
   "devDependencies": {
-    "@vue/cli-service": "^4.2.3",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "babel-eslint": "^10.0.3",
     "css-loader": "^3.4.2",
-    "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.13.1",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
-    "svg-inline-loader": "^0.8.2",
-    "vue-loader": "^15.9.0",
+    "style-loader": "^1.1.3",
+    "svg-inline-loader": "^0.8.0",
+    "vue-loader": "^15.8.3",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11"
-  }
+  },
+  "homepage": "https://github.com/Haeven/vuetiful#readme",
+  "license": "MIT",
+  "main": "/src/index.js",
+  "name": "vuetiful-js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Haeven/vuetiful.git"
+  },
+  "scripts": {
+    "build": "node src/build/build.js && webpack --config build/webpack.config.base.js",
+    "dev": "node src/build/utils/generate-app-entry.js && vue-cli-service serve --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.4.8"
 }
