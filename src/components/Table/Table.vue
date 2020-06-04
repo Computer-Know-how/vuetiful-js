@@ -98,7 +98,7 @@
 									@blur="onCellBlur(tableCell, tableRow.index, j)"
 									@keydown.enter.stop.prevent="onCellKeyEnter"
 								>
-									{{ tableCell.data }}
+									<span v-html="tableCell.data"></span>
 								</span>
 								<div
 									v-else-if="Array.isArray(tableCell.data)"
