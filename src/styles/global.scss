@@ -244,6 +244,7 @@ input.placeholder-dark:-ms-input-placeholder { color:#909399; }
   font: normal normal 500 11px FontAwesome;
 	pointer-events: none;
 	display: inline;
+	color: black;
 }
 
 .icon.--right:before { content: '\f054'; }
@@ -258,3 +259,5 @@ input.placeholder-dark:-ms-input-placeholder { color:#909399; }
 .icon.--search:before { content: '\f002'; }
 .icon.--nav:before { content: '\f0c9'; }
 .icon.--arrow-right:before { content: '\f061'; }
+.icon.--envelope:before { content: '\f0e0'; }
+.icon.--lock:before { content: '\f023'; }
