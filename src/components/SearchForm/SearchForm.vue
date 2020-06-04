@@ -1,6 +1,6 @@
 <template>
 	<div class="search-form" :class="narrow ? 'narrow' : ''">
-		<h2>Search Parameters:</h2>
+		<h2>Search</h2>
 		<div class="search-form__container">
 			<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
 				<label>{{ field.label }}</label>
