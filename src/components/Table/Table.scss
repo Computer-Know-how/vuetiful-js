@@ -41,6 +41,10 @@
 		padding-right: 5px;
 	}
 
+	.accordion__icon {
+		cursor: pointer;
+	}
+
 	div:first-child{
 		.accordion-controls, .accordion-icon, .accordion-indent{
 			display: block;
@@ -160,8 +164,6 @@
 		z-index: 100;
 		position: absolute;
 		display: flex;
-		background: rgb(255,255,255);
-		background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.0500429468662465) 51%, rgba(0,0,0,0.29766199448529416) 100%);
 		cursor: pointer;
 		margin-top: 45px;
 

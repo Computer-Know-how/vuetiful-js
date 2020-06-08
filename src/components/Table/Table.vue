@@ -90,10 +90,10 @@
 									</span>
 								</span>
 								<span v-if="tableRow.options && tableRow.options.accordion" class="accordion-controls">
-									<span v-if="accordions[tableRow.options.accordion.accordionId].expanded && accordions[tableRow.options.accordion.accordionId].child">
+									<span class="accordion__icon" v-if="accordions[tableRow.options.accordion.accordionId].expanded && accordions[tableRow.options.accordion.accordionId].child">
 										<span class="icon --down-chevron"></span>
 									</span>
-									<span v-else-if="!accordions[tableRow.options.accordion.accordionId].expanded && accordions[tableRow.options.accordion.accordionId].child">
+									<span class="accordion__icon" v-else-if="!accordions[tableRow.options.accordion.accordionId].expanded && accordions[tableRow.options.accordion.accordionId].child">
 										<span class="icon --right-chevron"></span>
 									</span>
 									<span v-else>
@@ -103,7 +103,6 @@
 								</span>
 								<span v-if="tableRow.options && tableRow.options.icon"
 									:class="`accordion-icon icon --${tableRow.options.icon}`">
-								</span>
 								</span>
 								<div
 									v-if="Array.isArray(tableCell.data) && tableCell.data.length > 2"
@@ -269,6 +268,7 @@ export default {
 		textOverflow       () { return (this.params.textOverflow && textOverflowList.includes(this.params.textOverflow)) ? this.params.textOverflow : textOverflowList[0];    },
 		showCheck          () { return !!(this.params.showCheck);                                                                                                             },
 		enableSearch       () { return !!(this.params.enableSearch);                                                                                                          },
+		enableAccordion    () { return !!(this.params.accordion);                                                                                                           },
 		enableTools        () { return !!(this.params.enableTools);                                                                                                           },
 		minWidth           () { return (typeof this.params.minWidth === 'number' && this.params.minWidth > 0) ? this.params.minWidth : '100%';                                   },
 		maxWidth           () { return (typeof this.params.maxWidth === 'number' && this.params.maxWidth > 0) ? this.params.maxWidth : '1600px';                                  },
@@ -365,7 +365,7 @@ export default {
 		 * @function - Initialize Table data
 		 */
 		initData() {
-			if (is2DMatrix(this.sourceData)) {
+			if (is2DMatrix(this.sourceData) || this.enableAccordion) {
 				const table = {
 					key: generateUnique('table-'),
 					checked: false,
@@ -608,7 +608,7 @@ export default {
 			this.$emit('row-click', rowIndex, this.getRowDataFromTableRow(tableRow));
 
 			if(options && options.accordion){
-				this.toggleAccordion(options.accordion, !options.accordion.expanded)
+				this.toggleAccordion(options.accordion, !options.accordion.expanded);
 			}
 		},
 		toggleAccordion(accordion, topLevelExpanded, previousLevelExpanded){
@@ -626,7 +626,7 @@ export default {
 			// recursive case: if there are children, call for each child
 			if(accordion.child){
 				for(let childId of accordion.child){
-					this.toggleAccordion(this.accordions[childId], topLevelExpanded, current.expanded)
+					this.toggleAccordion(this.accordions[childId], topLevelExpanded, current.expanded);
 				}
 			}
 		},

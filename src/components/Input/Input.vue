@@ -2,7 +2,7 @@
   <div class="input__container" @mouseenter="hovering = true" @mouseleave="hovering = false" :style="{ backgroundColor: inputBackground }">
     <input ref="input" :placeholder="placeholder" :type="type"
       :class="`${placeholderEffect} ${prefixIcon ? 'prefix' : ''}`"
-      :style="{ color: inputColor, borderColor: borderColor }"
+      :style="`color: ${inputColor}; border-color: ${borderColor}; min-width: ${inputWidth}px`"
       @input="handleInput"
       @focus="handleFocus"
       @blur="handleBlur"
@@ -32,6 +32,7 @@ export default {
 		type: { type: String, default: 'text' },
 		placeholder: { type: String, default: '' },
 		placeholderEffect: { type: String, default: 'light' },
+		inputWidth: { type: String, default: '200' },
 		inputColor: { type: String, default: '#606266' },
 		inputBackground: { type: String, default: '#FFFFFF' },
 		inputBorderColor: { type: String, default: '#DCDFE6' },

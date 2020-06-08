@@ -3,7 +3,7 @@
 		<ul>
 			<li v-for="item in navigableItems"
 				:class="(loadedPage === item.location || item.location === '/dashboard' && loadedPage == '/') ? 'active' : ''"
-				:id="item.slug"
+				:id="`sidebar-item--${item.slug}`"
 				v-bind:key="item.slug"
 				v-show="!item.permissionLevel || userPermissionLevel >= item.permissionLevel"
 				@click="redirect(item.location, item.slug)">
@@ -36,8 +36,8 @@ export default {
 		redirect(location, activeSlug) {
 			this.navigableItems.map(inactive => {
 				(inactive.slug != activeSlug)
-					? document.querySelector(`#${inactive.slug}`).classList.remove('active')
-					: document.querySelector(`#${activeSlug}`).classList.add('active');
+					? document.querySelector(`#sidebar-item--${inactive.slug}`).classList.remove('active')
+					: document.querySelector(`#sidebar-item--${activeSlug}`).classList.add('active');
 			});
 
 			this.$router.push(activeSlug);
