@@ -16,9 +16,7 @@ export default {
 			this.$emit('buttonClick');
 		}
 	},
-	props: {
-		errorMessage: String
-	}
+	props: { errorMessage: String }
 };
 </script>
 
