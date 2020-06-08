@@ -14,7 +14,7 @@
 		</search-checkbox>
 
 		<div class="btn__container">
-			<button :class="button.class" class="btn" v-for="button of formButtons" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
+			<button :class="button.class" class="btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
 			<button class="btn --secondary"><span>Clear Search Fields</span></button>
 		</div>
 	</div>
