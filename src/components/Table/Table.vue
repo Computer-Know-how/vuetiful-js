@@ -55,11 +55,11 @@
 					<!-- Table Body rows -->
 					<div v-for="(tableRow, i) in tableData.rows" :key="i">
 						<div
-							v-show="tableRow.show && !tableRow.filtered && !(pagination && !tableRow.inPage) && !(i === 0 && headerInfirstRow)"
+							v-show="tableRow.show && !tableRow.filtered && !(pagination && !tableRow.inPage) && !(i === 0 && headerInfirstRow) && (!(tableRow.options && tableRow.options.accordion) || accordions[tableRow.options.accordion.accordionId].show)"
 							:id="`table__row-${tableRow.index}`"
 							:class="`table__row flex-c ${rowStripe && i % 2 === 0 ? 'is-striped' : ''} ${tableBorder}`"
 							:style="{ height: rowHeight + 'px' }"
-							@click="onClickRow(tableRow, tableRow.index)">
+							@click="onClickRow(tableRow, tableRow.index, tableRow.options)">
 							<!-- Row checkbox -->
 							<div
 								v-if="showCheck"
@@ -73,6 +73,7 @@
 								</div>
 							</div>
 
+
 							<!-- Table Body cells -->
 							<div
 								v-for="(tableCell, j) in tableRow.cells"
@@ -82,12 +83,35 @@
 								:style="getCellStyle(tableRow.index, j)"
 								@click="onClickCell(tableCell, tableRow.index, j)"
 							>
+
+								<span v-if="tableRow.options && tableRow.options.accordion">
+									<span v-if="tableRow.options.accordion.indent">
+										<span v-for="index in tableRow.options.accordion.indent" :key="index" class="accordion-indent"></span>
+									</span>
+								</span>
+								<span v-if="tableRow.options && tableRow.options.accordion" class="accordion-controls">
+									<span v-if="accordions[tableRow.options.accordion.accordionId].expanded && accordions[tableRow.options.accordion.accordionId].child">
+										<span class="icon --down-chevron"></span>
+									</span>
+									<span v-else-if="!accordions[tableRow.options.accordion.accordionId].expanded && accordions[tableRow.options.accordion.accordionId].child">
+										<span class="icon --right-chevron"></span>
+									</span>
+									<span v-else>
+										<span class="accordion-indent"></span>
+										<span class="accordion-indent"></span>
+									</span>
+								</span>
+								<span v-if="tableRow.options && tableRow.options.icon"
+									:class="`accordion-icon icon --${tableRow.options.icon}`">
+								</span>
+								</span>
 								<div
 									v-if="Array.isArray(tableCell.data) && tableCell.data.length > 2"
 									@click="expandCell($event, tableRow.index, tableCell, j)"
 									class="expand-arrow"
 								>
 									<span><i class="icon --down"></i></span>
+
 								</div>
 								<span
 									v-if="typeof tableCell.data == 'string'"
@@ -98,7 +122,7 @@
 									@blur="onCellBlur(tableCell, tableRow.index, j)"
 									@keydown.enter.stop.prevent="onCellKeyEnter"
 								>
-									<span v-html="tableCell.data"></span>
+									{{ tableCell.data }}
 								</span>
 								<div
 									v-else-if="Array.isArray(tableCell.data)"
@@ -166,6 +190,7 @@
 
 <script>
 import { populatedArray, is2DMatrix } from '../../utils/array.js';
+import { deepCopy } from '../../utils/deepCopy.js';
 import { generateUnique } from '../../utils/generateUnique.js';
 
 // Components
@@ -187,7 +212,8 @@ export default {
 			totalPages          : 0,
 			pageSize            : 0,
 			quickPeekArr        : [],
-			showAction          : []
+			showAction          : [],
+			accordions					: []
 		};
 	},
 	props: {
@@ -359,7 +385,19 @@ export default {
 						index: i
 					};
 
-					tableRow.cells = this.sourceData[i].map(item => new Object({ data: item, key: generateUnique('table-'), checked: false, selected: false }));
+					let sourceRow = deepCopy(this.sourceData[i]);
+					// set the row options if they were sent, then remove the options so they don't impact the display
+					if(sourceRow[0] && sourceRow[0].type === 'rowOptions'){
+						tableRow.options = sourceRow[0];
+
+						if(tableRow.options.accordion){
+							this.accordions[tableRow.options.accordion.accordionId] = tableRow.options.accordion;
+						}
+
+						sourceRow.splice(0,1);
+					}
+
+					tableRow.cells = sourceRow.map(item => new Object({ data: item, key: generateUnique('table-'), checked: false, selected: false }));
 					table.rows.push(tableRow);
 				}
 
@@ -566,8 +604,31 @@ export default {
 		 * @param {Object} tableRow - Row data object
 		 * @param {Number} rowIndex - Row index
 		 */
-		onClickRow(tableRow, rowIndex) {
+		onClickRow(tableRow, rowIndex, options) {
 			this.$emit('row-click', rowIndex, this.getRowDataFromTableRow(tableRow));
+
+			if(options && options.accordion){
+				this.toggleAccordion(options.accordion, !options.accordion.expanded)
+			}
+		},
+		toggleAccordion(accordion, topLevelExpanded, previousLevelExpanded){
+			let current = this.accordions[accordion.accordionId];
+
+			// if this is the top level, toggle the expanded flag
+			if(typeof previousLevelExpanded === 'undefined'){
+				current.expanded = !current.expanded;
+			}
+			else{
+				// determine if we should show the row if it is not the top level row
+				current.show = this.accordions[current.parent].expanded && topLevelExpanded;
+			}
+
+			// recursive case: if there are children, call for each child
+			if(accordion.child){
+				for(let childId of accordion.child){
+					this.toggleAccordion(this.accordions[childId], topLevelExpanded, current.expanded)
+				}
+			}
 		},
 		/**
 		 * @function - Click Cell event
@@ -943,6 +1004,7 @@ export default {
 	},
 	components: { 'table-input': Input, 'quick-peek': QuickPeek }
 };
+
 </script>
 
 <style lang='scss' scoped>

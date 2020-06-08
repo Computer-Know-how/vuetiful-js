@@ -137,12 +137,12 @@ div h1 {
     background-color: $brand-danger;
     color: white;
 		border-color: $brand-danger;
-		
+
 		&.--light {
 			background-color: white !important;
 			border-color: $brand-danger !important;
 			color: $brand-danger;
-			 
+
 			&:hover, &:active, &.--toggle:focus {
 				border-color: $brand-danger;
 				background-color: $brand-danger !important;
@@ -261,4 +261,7 @@ input.placeholder-dark:-ms-input-placeholder { color:#909399; }
 .icon.--arrow-right:before { content: '\f061'; }
 .icon.--envelope:before { content: '\f0e0'; }
 .icon.--lock:before { content: '\f023'; }
-.icon.--edit:before { content: '\f044'; }
+.icon.--organization:before { content: '\f1ad'; }
+.icon.--person:before { content: '\f007'; }
+.icon.--right-chevron:before { content: '\f054'; }
+.icon.--down-chevron:before { content: '\f078'; }
