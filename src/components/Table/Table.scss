@@ -34,7 +34,28 @@
 	&.is-header {
 		overflow: hidden;
 	}
+
+
+	.accordion-controls, .accordion-icon, .accordion-indent{
+		display: none;
+		padding-right: 5px;
+	}
+
+	div:first-child{
+		.accordion-controls, .accordion-icon, .accordion-indent{
+			display: block;
+		}
+
+		.accordion-indent{
+			width:30px;
+			display: inline-block;
+		}
+	}
+
 }
+
+
+
 .table__row.is-header,
 .table__cell.is-header {
 	font-weight: 800 !important;
