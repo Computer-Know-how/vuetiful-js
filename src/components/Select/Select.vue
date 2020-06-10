@@ -8,8 +8,14 @@
 			<select
 				@focus="handleFocus"
 				@blur="handleBlur"
+				@change="handleSelect"
+				ref="select"
 			>
-				<option v-for="item in items" v-bind:key="item" :value="item">{{ item }}</option>
+				<option
+					v-for="item in items"
+					v-bind:key="itemsKey ? item[itemsKey] : item"
+					:value="itemsKey ? item[itemsKey] : item">{{ itemsKey ? item[itemsKey] : item }}
+				</option>
 			</select>
 	</div>
 </template>
@@ -23,15 +29,17 @@ export default {
 			focused: false
 		};
 	},
+	mounted() {
+		this.$emit('select', this.itemsKey ? this.items[0][this.itemsKey] : this.items[0]);
+	},
 	props: {
-		items: Array,
-		value: [ String, Number ],
-		type: { type: String, default: 'text' },
-		selectColor: { type: String, default: '#606266' },
-		selectBackground: { type: String, default: '#FFFFFF' },
-		selectBorderColor: { type: String, default: '#DCDFE6' },
+		items                    : Array,
+		itemsKey                 : { type: String },
+		selectColor              : { type: String, default: '#606266' },
+		selectBackground         : { type: String, default: '#FFFFFF' },
+		selectBorderColor        : { type: String, default: '#DCDFE6' },
 		selectBorderColorHovering: { type: String, default: '#C0C4CC' },
-		selectBorderColorFocused: { type: String, default: '#409EFF' },
+		selectBorderColorFocused : { type: String, default: '#409EFF' },
 	},
 	computed: {
 		borderColor () {
@@ -41,9 +49,9 @@ export default {
 		}
 	},
 	methods: {
-		getselect () { this.$refs && this.$refs.select ? this.$refs.select : null; },
-		focus     () { this.$refs.select.focus(); },
-		blur      () { this.$refs.select.blur(); },
+		handleSelect (e) { this.$emit('select', e.target.selectedOptions[0].value); },
+		focus        () { this.$refs.select.focus(); },
+		blur         () { this.$refs.select.blur(); },
 		handleFocus  (event) {
 			this.focused = true;
 			this.$emit('focus', event);
@@ -57,5 +65,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './select.scss';
+@import './Select.scss';
 </style>

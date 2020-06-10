@@ -3,7 +3,29 @@
 		<div v-if="tableData && tableData.rows && tableData.rows.length > 0" :style="`minWidth: ${minWidth}; maxWidth: ${maxWidth};`">
 			<!-- Table Tools -->
 			<div class="table__tools flex-c-s" v-if="enableTools">
-				<table-input v-if="enableSearch" class="tools__tools--search" v-model="searchValue" placeholder="Search" prefixIcon="icon --search"></table-input>
+				<span class="faceted-search__toggle" v-if="enableFacetedSearch" @click="facetedSearchToggled = !facetedSearchToggled"><i class="icon --cog"></i></span>
+				<table-input v-if="enableSearch" class="table__tools--search" v-model="searchValue" placeholder="Search" prefixIcon="icon --search"></table-input>
+			</div>
+
+			<div class="table__tools--faceted-search flex-c-s" v-if="enableTools && facetedSearchToggled">
+				<span class="faceted-search--container">
+					<span class="faceted-search__controls">
+						<table-select placeholder="Search" :items="tableData.rows[0].cells" @select="facetedSearchContext = $event" itemsKey="data"></table-select>
+						<table-input :placeholder="`Filter by: ${facetedSearchContext}`" :value="facetedSearchFilterValue" @input="facetedSearchFilterValue = $event" prefixIcon="icon --cog"></table-input>
+						<button class="btn --primary" @click="addFilter()">Filter</button>
+					</span>
+
+					<span class="faceted-search__filters-container" v-show="facetedFilters.length">
+						<h6>All Filters:</h6>
+						<div class="faceted-search__filters">
+							<span class="faceted-search__filter" v-for="(filter, index) in facetedFilters" :key="index" @click="removeFilter(index)">
+								<span class="btn --light">
+									<i class="icon --times"></i>{{ filter.column + ': ' + filter.value }}
+								</span>
+							</span>
+						</div>
+					</span>
+				</span>
 			</div>
 
 			<!-- Table -->
@@ -194,6 +216,7 @@ import { generateUnique } from '../../utils/generateUnique.js';
 
 // Components
 import Input from '../Input/Input.vue';
+import Select from '../Select/Select.vue';
 import QuickPeek from '../QuickPeek/QuickPeek.vue';
 
 // Statics
@@ -212,35 +235,40 @@ export default {
 			pageSize            : 0,
 			quickPeekArr        : [],
 			showAction          : [],
-			accordions					: []
+			accordions					: [],
+			facetedSearchContext: '',
+			facetedSearchFilterValue: '',
+			facetedFilters      : [],
+			facetedSearchToggled: false
 		};
 	},
 	props: {
 		/*
-			params.data             : (Array) Tabular data
-			params.header           : (String) header type. 'row': the first row is used as the header; 'column': the first column is used as the header; '' / 'none' / other: no header. Default None
-			params.border           : (Boolean) Whether to have a border. Without default
-			params.stripe           : (Boolean) The background interval stripes are displayed. Default false
-			params.highlight        : (Object) configure row / column / table cells for the highlighted background
-			params.highlightedColor : (String) The color of the highlighted background.
-			params.wordWrap         : (String) long word wrap for text in table cells 'normal / break-word' default normal
-			params.whiteSpace       : (String) white space for text in table cells 'nowrap / normal / pre / pre-wrap / pre-line' default nowrap
-			params.textOverflow     : (String) text overflow handling in table cells 'clip / ellipsis' default clip
-			params.showCheck        : (Boolean) Whether to show a multi-select (check) box before the first column. Not displayed by default. Note: Only when params.header is' row, the first row and the first column are 'select all' boxes, otherwise the first column is the check box of the current row
-			params.enableSearch     : (Boolean) Enable search. Disabled by default
-			params.minWidth         : (Number) The minimum width of the table. Default 300
-			params.maxWidth         : (Number) The maximum width of the table. Default 1000
-			params.height           : (Number) table height.
-			params.headerHeight     : (Number) table row height. Default 30
-			params.rowHeight        : (Number) table row height. Default 30
-			params.columnWidth      : (Array) specifies the width of one or more columns, and the remaining column widths are evenly divided. [{column: 0, width: 80}, {column: 1, width: '20% '}]
-			params.sort             : (Array) specifies sorting based on a column. Sort by specifying the first and second columns: [0, 1]. Only valid when the first row is configured as a table header
-			params.edit             : (Object) configures editable row / column / table cells. For example: {row: [2, 3, ...], column: [3, 4, ...], cell: [[4, 4], [5, 6], ...]}; negative numbers indicate Reverse order (eg -1 is the last row / column); row: 'all' all rows
+			params.data               : (Array) Tabular data
+			params.header             : (String) header type. 'row': the first row is used as the header; 'column': the first column is used as the header; '' / 'none' / other: no header. Default None
+			params.border             : (Boolean) Whether to have a border. Without default
+			params.stripe             : (Boolean) The background interval stripes are displayed. Default false
+			params.highlight          : (Object) configure row / column / table cells for the highlighted background
+			params.highlightedColor   : (String) The color of the highlighted background.
+			params.wordWrap           : (String) long word wrap for text in table cells 'normal / break-word' default normal
+			params.whiteSpace         : (String) white space for text in table cells 'nowrap / normal / pre / pre-wrap / pre-line' default nowrap
+			params.textOverflow       : (String) text overflow handling in table cells 'clip / ellipsis' default clip
+			params.showCheck          : (Boolean) Whether to show a multi-select (check) box before the first column. Not displayed by default. Note: Only when params.header is' row, the first row and the first column are 'select all' boxes, otherwise the first column is the check box of the current row
+			params.enableSearch       : (Boolean) Enable search. Disabled by default
+			params.enableFacetedSearch: (Boolean) Enable Faceted search. Disabled by default
+			params.minWidth           : (Number) The minimum width of the table. Default 300
+			params.maxWidth           : (Number) The maximum width of the table. Default 1000
+			params.height             : (Number) table height.
+			params.headerHeight       : (Number) table row height. Default 30
+			params.rowHeight          : (Number) table row height. Default 30
+			params.columnWidth        : (Array) specifies the width of one or more columns, and the remaining column widths are evenly divided. [{column: 0, width: 80}, {column: 1, width: '20% '}]
+			params.sort               : (Array) specifies sorting based on a column. Sort by specifying the first and second columns: [0, 1]. Only valid when the first row is configured as a table header
+			params.edit               : (Object) configures editable row / column / table cells. For example: {row: [2, 3, ...], column: [3, 4, ...], cell: [[4, 4], [5, 6], ...]}; negative numbers indicate Reverse order (eg -1 is the last row / column); row: 'all' all rows
 			Editing will change the data displayed in the table and will not change the incoming source data. When the component method is called to obtain the table data, the edited data is returned. The header is not editable. Disabled by default
-			params.filter           : (Array) configure column-based filtering. For example: [{column: 0, content: [{text: '> 5', value: 5}], method: (value, tableCell) => {...}}]
-			params.pagination       : (Boolean) Whether to enable pagination. Default false
-			params.pageSize         : (Number) shows the number of pages per page
-			params.pageSizes        : (Array) optional value for displaying the number of pages per page
+			params.filter             : (Array) configure column-based filtering. For example: [{column: 0, content: [{text: '> 5', value: 5}], method: (value, tableCell) => {...}}]
+			params.pagination         : (Boolean) Whether to enable pagination. Default false
+			params.pageSize           : (Number) shows the number of pages per page
+			params.pageSizes          : (Array) optional value for displaying the number of pages per page
 		*/
 		params: {
 			type: Object,
@@ -248,41 +276,42 @@ export default {
 		}
 	},
 	computed: {
-		sourceData         () { return (Array.isArray(this.params.data)) ? this.params.data : [];                                                                             },
-		visibleActions     () { return (Array.isArray(this.params.data) && this.params.actionsConfig) ? this.params.data.reduce((agg, cur, i) => { agg[i] = false; return agg; }, {}) : {};                                                                             },
-		tableBorder        () { return (this.params.border) ? 'show-border' : '';                                                                                        		 },
-		selectableRows     () { return (this.params.selectable) ? true : false;                                                                                        		 },
-		fixedColumns     () { return (this.params.fixedColumns) ? this.params.fixedColumns : [];                                                                                 },
-		actionsEnabled   () { return (this.params.actionsConfig) ? true : false;                  		 },
-		actionsConfig   () { return (this.params.actionsConfig && this.params.actionsConfig.actions) ? this.params.actionsConfig.actions : [];                  		 },
-		quickPeekEnabled   () { return (this.params.quickPeekConfig) ? true : false;                                                                                        		 },
-		quickPeekHeaders   () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.headers) ? this.params.quickPeekConfig.headers : [];                  		 },
-		quickPeekRowHeadingIndex   () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowHeadingIndex) ? this.params.quickPeekConfig.rowHeadingIndex : 0;                  		 },
-		quickPeekRowSubHeadingIndex   () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowSubHeadingIndex) ? this.params.quickPeekConfig.rowSubHeadingIndex : 1;                  		 },
-		rowStripe          () { return (this.params.rowStripe) ? 'is-striped' : '';                                                                                           },
-		highlightConfig    () { return (this.params.highlight && typeof this.params.highlight === 'object') ? this.params.highlight : {};                                     },
-		highlightedColor   () { return (this.params.highlightedColor && typeof this.params.highlightedColor === 'string') ? this.params.highlightedColor : '#000000';         },
-		headerInfirstRow   () { return !!(this.params.header === 'row');},
-		wordWrap           () { return (this.params.wordWrap && wordWrapList.includes(this.params.wordWrap)) ? this.params.wordWrap : wordWrapList[0];                        },
-		whiteSpace         () { return (this.params.whiteSpace && whiteSpaceList.includes(this.params.whiteSpace)) ? this.params.whiteSpace : whiteSpaceList[0];              },
-		textOverflow       () { return (this.params.textOverflow && textOverflowList.includes(this.params.textOverflow)) ? this.params.textOverflow : textOverflowList[0];    },
-		showCheck          () { return !!(this.params.showCheck);                                                                                                             },
-		enableSearch       () { return !!(this.params.enableSearch);                                                                                                          },
-		enableAccordion    () { return !!(this.params.accordion);                                                                                                           },
-		enableTools        () { return !!(this.params.enableTools);                                                                                                           },
-		minWidth           () { return (typeof this.params.minWidth === 'number' && this.params.minWidth > 0) ? this.params.minWidth : '100%';                                   },
-		maxWidth           () { return (typeof this.params.maxWidth === 'number' && this.params.maxWidth > 0) ? this.params.maxWidth : '1600px';                                  },
-		height             () { return (typeof this.params.height === 'number' && this.params.height > this.rowHeight) ? this.params.height - this.rowHeight + 'px' : 'auto'; },
-		headerHeight       () { return (typeof this.params.headerHeight === 'number' && this.params.headerHeight >= 24) ? this.params.headerHeight : 30;                      },
-		headerFontSize     () { return (typeof this.params.headerFontSize === 'number') ? this.params.headerHeight : 14;                                                      },
-		headerDropShadow   () { return (this.params.headerBoxShadow) ? this.params.headerBoxShadow : false;                                                                   },
-		rowHeight          () { return (typeof this.params.rowHeight === 'number' && this.params.rowHeight >= 24) ? this.params.rowHeight : 30;                               },
-		sortConfig         () { return (this.params.header === 'row' && Array.isArray(this.params.sort)) ? this.params.sort : [];                                             },
-		editConfig         () { return (this.params.edit && typeof this.params.edit === 'object') ? this.params.edit : {};                                                    },
-		pagination         () { return !!(this.params.pagination);                                                                                                            },
-		pageConfig         () { return (typeof this.params.pageSize === 'number' &&this.params.pageSize > 0) ? this.params.pageSize : 10;                                     },
-		pageSizes          () { return (Array.isArray(this.params.pageSizes)) ? this.params.pageSizes : [10, 20, 50, 100];                                                    },
-		cellStyle          () { return (Array.isArray(this.params.cellStyle)) ? this.params.cellStyle : [];                                                    },
+		sourceData                  () { return (Array.isArray(this.params.data)) ? this.params.data : []; },
+		visibleActions              () { return (Array.isArray(this.params.data) && this.params.actionsConfig) ? this.params.data.reduce((agg, cur, i) => { agg[i] = false; return agg; }, {}) : {}; },
+		tableBorder                 () { return (this.params.border) ? 'show-border' : ''; },
+		selectableRows              () { return (this.params.selectable) ? true : false; },
+		fixedColumns                () { return (this.params.fixedColumns) ? this.params.fixedColumns : []; },
+		actionsEnabled              () { return (this.params.actionsConfig) ? true : false; },
+		actionsConfig               () { return (this.params.actionsConfig && this.params.actionsConfig.actions) ? this.params.actionsConfig.actions : []; },
+		quickPeekEnabled            () { return (this.params.quickPeekConfig) ? true : false; },
+		quickPeekHeaders            () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.headers) ? this.params.quickPeekConfig.headers : []; },
+		quickPeekRowHeadingIndex    () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowHeadingIndex) ? this.params.quickPeekConfig.rowHeadingIndex : 0; },
+		quickPeekRowSubHeadingIndex () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowSubHeadingIndex) ? this.params.quickPeekConfig.rowSubHeadingIndex : 1; },
+		rowStripe                   () { return (this.params.rowStripe) ? 'is-striped' : ''; },
+		highlightConfig             () { return (this.params.highlight && typeof this.params.highlight === 'object') ? this.params.highlight : {}; },
+		highlightedColor            () { return (this.params.highlightedColor && typeof this.params.highlightedColor === 'string') ? this.params.highlightedColor : '#000000'; },
+		headerInfirstRow            () { return !!(this.params.header === 'row');},
+		wordWrap                    () { return (this.params.wordWrap && wordWrapList.includes(this.params.wordWrap)) ? this.params.wordWrap : wordWrapList[0]; },
+		whiteSpace                  () { return (this.params.whiteSpace && whiteSpaceList.includes(this.params.whiteSpace)) ? this.params.whiteSpace : whiteSpaceList[0]; },
+		textOverflow                () { return (this.params.textOverflow && textOverflowList.includes(this.params.textOverflow)) ? this.params.textOverflow : textOverflowList[0]; },
+		showCheck                   () { return !!(this.params.showCheck); },
+		enableSearch                () { return !!(this.params.enableSearch); },
+		enableFacetedSearch         () { return !!(this.params.enableFacetedSearch); },
+		enableAccordion             () { return !!(this.params.accordion); },
+		enableTools                 () { return !!(this.params.enableTools); },
+		minWidth                    () { return (typeof this.params.minWidth === 'number' && this.params.minWidth > 0) ? this.params.minWidth : '100%'; },
+		maxWidth                    () { return (typeof this.params.maxWidth === 'number' && this.params.maxWidth > 0) ? this.params.maxWidth : '1600px'; },
+		height                      () { return (typeof this.params.height === 'number' && this.params.height > this.rowHeight) ? this.params.height - this.rowHeight + 'px' : 'auto'; },
+		headerHeight                () { return (typeof this.params.headerHeight === 'number' && this.params.headerHeight >= 24) ? this.params.headerHeight : 30; },
+		headerFontSize              () { return (typeof this.params.headerFontSize === 'number') ? this.params.headerHeight : 14; },
+		headerDropShadow            () { return (this.params.headerBoxShadow) ? this.params.headerBoxShadow : false; },
+		rowHeight                   () { return (typeof this.params.rowHeight === 'number' && this.params.rowHeight >= 24) ? this.params.rowHeight : 30; },
+		sortConfig                  () { return (this.params.header === 'row' && Array.isArray(this.params.sort)) ? this.params.sort : []; },
+		editConfig                  () { return (this.params.edit && typeof this.params.edit === 'object') ? this.params.edit : {}; },
+		pagination                  () { return !!(this.params.pagination); },
+		pageConfig                  () { return (typeof this.params.pageSize === 'number' &&this.params.pageSize > 0) ? this.params.pageSize : 10; },
+		pageSizes                   () { return (Array.isArray(this.params.pageSizes)) ? this.params.pageSizes : [10, 20, 50, 100]; },
+		cellStyle                   () { return (Array.isArray(this.params.cellStyle)) ? this.params.cellStyle : []; },
 		columnWidth() {
 			if (populatedArray(this.params.columnWidth)) {
 				const obj = {};
@@ -371,7 +400,8 @@ export default {
 					checked: false,
 					selected: false,
 					rows: [],
-					filteredRows: {}
+					filteredRows: {},
+					allFilteredRows: []
 				};
 
 				for (let i = 0; i < this.sourceData.length; i++) {
@@ -739,8 +769,20 @@ export default {
 			if (!(this.tableData && this.tableData.rows)) return;
 
 			searchValue = String(searchValue);
-			this.tableData.rows.forEach(row => {
-				if (row && row.cells) {
+			if (this.tableData.allFilteredRows.length) {
+				this.tableData.rows.forEach(row => {
+					if (this.tableData.allFilteredRows.some(c => c.index == row.index)) {
+						if (!searchValue || row.show == false) {
+							if (!searchValue && row.filtered == false) row.show = true;
+							return;
+						}
+
+						const matched = row.cells.some(cell => String(cell.data).toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()));
+						row.show = !!matched;
+					}
+				});
+			} else {
+				this.tableData.rows.forEach(row => {
 					if (!searchValue) {
 						row.show = true;
 						return;
@@ -748,8 +790,8 @@ export default {
 
 					const matched = row.cells.some(cell => String(cell.data).toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()));
 					row.show = !!matched;
-				}
-			});
+				});
+			}
 
 			this.$nextTick(this.updatePagination);
 		},
@@ -1001,8 +1043,56 @@ export default {
 
 			return;
 		},
+		/**
+		 * @function - Add a filter to faceted filter search
+		 */
+		addFilter() {
+			if (this.facetedSearchFilterValue.length) {
+				const columnIndex = this.tableData.rows[0].cells.findIndex(cell => cell.data == this.facetedSearchContext);
+				this.tableData.rows.forEach((row, index) => {
+					if (row && row.cells) {
+						if (index == 0) {
+							row.show = true;
+							return;
+						}
+
+						const matched = String(row.cells[columnIndex].data).toLocaleLowerCase().includes(this.facetedSearchFilterValue.toLocaleLowerCase());
+						if (matched) this.tableData.allFilteredRows.push(row);
+
+						row.show = !!matched;
+						row.filtered = !matched;
+						if (row.affectingFilters) row.affectingFilters.push({ value: this.facetedSearchFilterValue, column: this.facetedSearchContext });
+						else row.affectingFilters = [ { value: this.facetedSearchFilterValue, column: this.facetedSearchContext } ];
+					}
+				});
+
+				this.facetedFilters.push({ value: this.facetedSearchFilterValue, column: this.facetedSearchContext });
+				this.facetedSearchFilterValue = '';
+			}
+		},
+		/**
+		 * @function - Remove filter from faceted filter search
+		 */
+		removeFilter(filterIndex) {
+			const filter = this.facetedFilters[filterIndex].value;
+
+			this.tableData.rows.forEach((row, index) => {
+				if (index == 0) { return; }
+				if (row.affectingFilters.some(i => i.value == filter)) {
+					row.affectingFilters.splice(row.affectingFilters.findIndex(x => x.value == filter), 1);
+
+					if (row.affectingFilters.length < 1 || row.affectingFilters.every(f => String(row.cells[this.tableData.rows[0].cells.findIndex(c => c.data == f.column)].data).toLocaleLowerCase().includes(f.value.toLocaleLowerCase()))) {
+						row.show = true;
+						row.filtered = false;
+					}
+				}
+			});
+
+
+			this.facetedFilters.splice(filterIndex, 1);
+		},
 	},
-	components: { 'table-input': Input, 'quick-peek': QuickPeek }
+	components: { 'table-input': Input, 'quick-peek': QuickPeek, 'table-select': Select }
 };
 
 </script>
