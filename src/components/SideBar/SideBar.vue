@@ -40,7 +40,7 @@ export default {
 					: document.querySelector(`#sidebar-item--${activeSlug}`).classList.add('active');
 			});
 
-			this.$router.push(activeSlug);
+			this.$router.push({name: activeSlug});
 		}
 	},
 	computed: {
