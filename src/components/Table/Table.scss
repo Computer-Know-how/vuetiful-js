@@ -112,7 +112,10 @@
 .table__select--row.is-checked {
 	border-color: $blue;
 	background-color: $blue;
-	color: #ffffff;
+
+	i {
+		color: #ffffff;
+	}
 }
 
 
@@ -144,7 +147,10 @@
 .table__check--row.is-checked {
 	border-color: $blue;
 	background-color: $blue;
-	color: #ffffff;
+
+	i {
+		color: #ffffff;
+	}
 }
 
 .table__cell {
