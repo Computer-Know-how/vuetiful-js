@@ -229,8 +229,16 @@
 .table__tools {
 	padding: 8px 0px;
 
+	h4 {
+		padding-top: 5px;
+	}
+
 	.faceted-search__toggle {
 		cursor: pointer;
+		align-self: flex-end;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-bottom: 2px;
 
 		&:hover {
 			i {
@@ -257,7 +265,7 @@
 	margin-right: 10px;
 	height: 70px;
 	padding-top: 20px;
-	padding-left: 10px;
+	padding-left: 20px;
 
 	.faceted-search--container {
 		align-self: flex-start;

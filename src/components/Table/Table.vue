@@ -3,8 +3,9 @@
 		<div v-if="tableData && tableData.rows && tableData.rows.length > 0" :style="`minWidth: ${minWidth}; maxWidth: ${maxWidth};`">
 			<!-- Table Tools -->
 			<div class="table__tools flex-c-s" v-if="enableTools">
-				<span class="faceted-search__toggle" v-if="enableFacetedSearch" @click="facetedSearchToggled = !facetedSearchToggled"><i class="icon --cog"></i></span>
+				<h3 class="title">Merge Listing</h3>
 				<table-input v-if="enableSearch" class="table__tools--search" v-model="searchValue" placeholder="Search" prefixIcon="icon --search"></table-input>
+				<span class="faceted-search__toggle" v-if="enableFacetedSearch" @click="facetedSearchToggled = !facetedSearchToggled"><i class="icon --cog"></i></span>
 			</div>
 
 			<div class="table__tools--faceted-search flex-c-s" v-if="enableTools && facetedSearchToggled">
