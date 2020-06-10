@@ -1077,7 +1077,7 @@ export default {
 			const filter = this.facetedFilters[filterIndex].value;
 
 			this.tableData.rows.forEach((row, index) => {
-				if (index == 0) { return; }
+				if (index == 0) return;
 				if (row.affectingFilters.some(i => i.value == filter)) {
 					row.affectingFilters.splice(row.affectingFilters.findIndex(x => x.value == filter), 1);
 
