@@ -769,8 +769,8 @@ export default {
 			if (!(this.tableData && this.tableData.rows)) return;
 
 			searchValue = String(searchValue);
-			if (this.tableData.allFilteredRows.length) {
-				this.tableData.rows.forEach(row => {
+			this.tableData.rows.forEach(row => {
+				if (this.tableData.allFilteredRows.length) {
 					if (this.tableData.allFilteredRows.some(c => c.index == row.index)) {
 						if (!searchValue || row.show == false) {
 							if (!searchValue && row.filtered == false) row.show = true;
@@ -780,9 +780,7 @@ export default {
 						const matched = row.cells.some(cell => String(cell.data).toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()));
 						row.show = !!matched;
 					}
-				});
-			} else {
-				this.tableData.rows.forEach(row => {
+				} else {
 					if (!searchValue) {
 						row.show = true;
 						return;
@@ -790,8 +788,8 @@ export default {
 
 					const matched = row.cells.some(cell => String(cell.data).toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()));
 					row.show = !!matched;
-				});
-			}
+				}
+			});
 
 			this.$nextTick(this.updatePagination);
 		},
