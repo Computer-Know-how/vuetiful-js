@@ -13,7 +13,7 @@ export default {
 	methods: {
 		redirect(location, activeSlug) {
 
-			this.$router.push(activeSlug);
+			this.$router.push({ name: activeSlug });
 		}
 	},
 	computed: {
