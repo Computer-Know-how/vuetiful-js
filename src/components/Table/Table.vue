@@ -48,6 +48,10 @@
 						</span>
 						<!-- TODO: add filtering functionality -->
 					</div>
+					<!-- Actions header -->
+					<div v-if="actionsEnabled" class="table__action flex-c-s is-header ">
+						<div class="table__action--header" style="white-space: nowrap; overflow-wrap: normal; text-overflow: clip; font-size: 14px;"><b>Actions</b></div>
+					</div>
 				</div>
 
 				<!-- Table Body -->
@@ -143,18 +147,24 @@
 							</div>
 
 							<!-- Quick peek button -->
-							<div :class="`table__select--link flex-c-c ${tableBorder}`">
-								<button v-if="quickPeekEnabled" @click="quickPeek(tableRow.index)">quick peek</button>
+							<div v-if="quickPeekEnabled" :class="`table__select--link flex-c-c ${tableBorder}`">
+								<button @click="quickPeek(tableRow.index)">quick peek</button>
 							</div>
 
-							<!-- Actions button -->
-							<div :class="`table__select--link flex-c-c ${tableBorder} actions__button`">
-								<button v-if="actionsEnabled" @click="actionsClicked(tableRow.index)">...</button>
-							</div>
+							<!-- Actions -->
+							<div
+								v-if="actionsEnabled"
+								:class="`table__action flex-c-s ${tableBorder}`"
+								:style="{ backgroundColor: isHighlighted(tableRow.index, NaN) ? highlightedColor : 'transparent' }">
+									<!-- Actions button -->
+									<div :class="`table__action--cell actions__button`">
+										<button @click="actionsClicked(tableRow.index)">...</button>
+									</div>
 
-							<!-- Actions Modal -->
-							<div class="actions__container full-box-shadow" v-show="showAction.includes(tableRow.index)" :id="tableRow.index">
-								<span v-for="action of actionsConfig" class="actions__action" :key="action.label" @click="emitAction(action.func, tableRow.index)"><p>{{ action.label }}</p></span>
+									<!-- Actions Modal -->
+									<div class="actions__container full-box-shadow" v-show="showAction.includes(tableRow.index)" :id="tableRow.index">
+										<span v-for="action of actionsConfig" class="actions__action" :key="action.label" @click="emitAction(action.func, tableRow.index)"><p>{{ action.label }}</p></span>
+									</div>
 							</div>
 
 							<!-- Row select button -->
