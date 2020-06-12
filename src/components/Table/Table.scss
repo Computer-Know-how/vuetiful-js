@@ -363,13 +363,23 @@
 	}
 }
 
-.actions__button {
-	font-size: 25pt;
+.table__action {
+	padding: 0 8px;
+
+	&--header, &--cell {
+		width: $table__action--width;
+	}
+	&--header {
+		font-size: 14px;
+	}
+	&--cell {
+		font-size: 2rem;
+	}
 
 	button {
-		margin-bottom: 20px !important;
-		margin-right: 90px;
-		color: black;
+		background-color: transparent;
+		border: none;
+		padding-bottom: 20px;
 	}
 }
 
