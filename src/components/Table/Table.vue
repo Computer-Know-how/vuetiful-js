@@ -50,7 +50,7 @@
 					</div>
 					<!-- Actions header -->
 					<div v-if="actionsEnabled" class="table__action flex-c-s is-header ">
-						<div class="table__action--header" style="white-space: nowrap; overflow-wrap: normal; text-overflow: clip; font-size: 14px;"><b>Actions</b></div>
+						<div class="table__action--header">Actions</div>
 					</div>
 				</div>
 

@@ -266,6 +266,9 @@
 	&--header, &--cell {
 		width: $table__action--width;
 	}
+	&--header {
+		font-size: 14px;
+	}
 	&--cell {
 		font-size: 2rem;
 	}
