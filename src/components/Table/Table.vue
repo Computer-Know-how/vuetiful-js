@@ -73,7 +73,7 @@
 					</div>
 					<!-- Actions header -->
 					<div v-if="actionsEnabled" class="table__action flex-c-s is-header ">
-						<div class="table__action--header">Actions</div>
+						<div class="table__action--header"></div>
 					</div>
 				</div>
 
@@ -1017,6 +1017,9 @@ export default {
 		 * @function - Handle action click
 		 */
 		actionsClicked(rowIndex) {
+			//Hide visible popups
+			this.showAction = [];
+
 			this.showAction.includes(rowIndex) ? this.showAction.splice(this.showAction.indexOf(rowIndex), 1) : this.showAction.push(rowIndex);
 			this.visibleActions[rowIndex] = (this.visibleActions[rowIndex]) ? false : true;
 		},
