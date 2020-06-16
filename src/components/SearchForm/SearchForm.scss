@@ -33,6 +33,15 @@
 		border: 1px solid #b6b6b6;
 		margin-bottom: 30px;
 		min-width: $search-form__field--min-width + 10px;
+
+		.input__container {
+			margin-right: 10px;
+		}
+
+		input {
+			width: 100%;
+			max-width: 500px;
+		}
 	}
 
 		.search-form__field {
