@@ -638,7 +638,7 @@ export default {
 			if (!this.selectableRows) return;
 
 			tableRow.selected = !tableRow.selected;
-			this.$emit('selectionChange', this.getRowDatas(true, 'selected'));
+			this.$emit('selectionChange', this.getRowDatas(true, 'selected'), tableRow);
 		},
 		/**
 		 * @function - Click Row Event
