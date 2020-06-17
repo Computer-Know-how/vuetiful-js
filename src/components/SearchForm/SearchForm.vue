@@ -1,7 +1,7 @@
 <template>
 	<div class="search-form" :class="narrow ? 'narrow' : ''">
-		<h2>{{ headerText }}</h2>
 		<span v-if="!fieldSets">
+		<h2>{{ headerText }}</h2>
 		<div class="search-form__container">
 			<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
 				<label>{{ field.label }}</label>
@@ -11,6 +11,7 @@
 		</div>
 		</span>
 		<span v-if="fieldSets">
+			<h2 class="search-from_header">{{ headerText }}</h2>
 			<div class="search-form__container">
 				<fieldset v-for="label in oFieldSetsLabels" v-bind:key="label">
 					<legend>{{ label }}</legend>
