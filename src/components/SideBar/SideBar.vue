@@ -41,7 +41,7 @@ export default {
 			});
 
 			if(activeSlug !== this.$router.currentRoute.name) {
-				this.$router.push({ name: activeSlug });
+				this.$router.push(activeSlug);
 			}
 		}
 	},
