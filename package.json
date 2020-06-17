@@ -83,7 +83,8 @@
   "scripts": {
     "build": "node src/build/build.js && webpack --config build/webpack.config.base.js",
     "dev": "node src/build/utils/generate-app-entry.js && vue-cli-service serve --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"public-rebase": "git fetch upstream master && git merge upstream/master"
   },
   "version": "1.4.8"
 }
