@@ -16,7 +16,7 @@
 				<fieldset v-for="label in oFieldSetsLabels" v-bind:key="label">
 					<legend>{{ label }}</legend>
 					<span v-for="field in formFields" v-bind:key="field.label" class="field-set-form__field">
-						<span v-if="label === field.fieldSet" >
+						<span v-if="label === field.group" >
 							<label>{{ field.label }}</label>
 							<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
 							<select-field v-else :items="field.items"></select-field>
@@ -55,8 +55,8 @@ export default {
 		},
 		getFieldSets() {
 			return this.formFields.reduce((agg, cur) => {
-				if(!agg.includes(cur.fieldSet)) {
-					agg.push(cur.fieldSet);
+				if(!agg.includes(cur.group)) {
+					agg.push(cur.group);
 				}
 				return agg;
 			}, []);
