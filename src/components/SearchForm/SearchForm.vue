@@ -1,21 +1,22 @@
 <template>
 	<div class="search-form" :class="narrow ? 'narrow' : ''">
 		<span v-if="!fieldSets">
-		<h2>{{ headerText }}</h2>
-		<div class="search-form__container">
-			<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
-				<label>{{ field.label }}</label>
-				<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
-				<select-field v-else :items="field.items"></select-field>
-			</div>
-		</div>
-		</span>
-		<span v-if="fieldSets">
-			<h2 class="search-from_header">{{ headerText }}</h2>
+			<h2>{{ headerText }}</h2>
 			<div class="search-form__container">
-				<fieldset v-for="label in oFieldSetsLabels" v-bind:key="label">
+				<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
+					<label>{{ field.label }}</label>
+					<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
+					<select-field v-else :items="field.items"></select-field>
+				</div>
+			</div>
+		</span>
+
+		<span v-if="fieldSets">
+			<h2 class="search-form_header">{{ headerText }}</h2>
+			<div class="search-form__container">
+				<fieldset v-for="label in oFieldSetsLabels" :key="label">
 					<legend>{{ label }}</legend>
-					<span v-for="field in formFields" v-bind:key="field.label" class="field-set-form__field">
+					<span v-for="field in formFields" :key="field.label" class="field-set-form__field">
 						<span v-if="label === field.group" >
 							<label>{{ field.label }}</label>
 							<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
@@ -42,11 +43,18 @@ import Checkbox from '../Checkbox/Checkbox.vue';
 
 export default {
 	name: 'search-form',
-	data() {
-		return {
-			oFormFields: this.getFormFields(),
-			oFieldSetsLabels: this.getFieldSets()
-		};
+	computed: {
+		oFormFields: function() {
+			return this.formFields.reduce((agg, cur) => { agg[cur.label] = ''; return agg; }, {});
+		},
+		oFieldSetsLabels: function() {
+			return this.formFields.reduce((agg, cur) => {
+				if(!agg.includes(cur.group)) {
+					agg.push(cur.group);
+				}
+				return agg;
+			}, []);
+		},
 	},
 	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
 	methods: {
