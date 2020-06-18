@@ -181,7 +181,11 @@
 								:style="{ backgroundColor: isHighlighted(tableRow.index, NaN) ? highlightedColor : 'transparent' }">
 									<!-- Actions button -->
 									<div :class="`table__action--cell actions__button`">
-										<button @click="actionsClicked(tableRow.index)">...</button>
+										<button 
+											@blur="handleActionsBlur()"
+											@click="actionsClicked(tableRow.index)">
+											...
+										</button>
 									</div>
 
 									<!-- Actions Modal -->
@@ -1022,6 +1026,13 @@ export default {
 
 			this.showAction.includes(rowIndex) ? this.showAction.splice(this.showAction.indexOf(rowIndex), 1) : this.showAction.push(rowIndex);
 			this.visibleActions[rowIndex] = (this.visibleActions[rowIndex]) ? false : true;
+		},
+		/**
+		 * @function - Handle action blur
+		 */
+		handleActionsBlur(rowIndex) {
+			this.showAction.splice(this.showAction.indexOf(rowIndex), 1);
+			this.visibleActions[rowIndex] = false;
 		},
 		/**
 		 * @function - Emit action
