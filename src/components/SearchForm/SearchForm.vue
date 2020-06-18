@@ -57,19 +57,7 @@ export default {
 		},
 	},
 	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
-	methods: {
-		getFormFields() {
-			return this.formFields.reduce((agg, cur) => { agg[cur.label] = ''; return agg; }, {});
-		},
-		getFieldSets() {
-			return this.formFields.reduce((agg, cur) => {
-				if(!agg.includes(cur.group)) {
-					agg.push(cur.group);
-				}
-				return agg;
-			}, []);
-		}
-	},
+	methods: {},
 	props: {
 		formFields: Array,
 		searchFunc: Function,
