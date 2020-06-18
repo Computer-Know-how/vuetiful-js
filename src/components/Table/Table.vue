@@ -181,7 +181,7 @@
 								:style="{ backgroundColor: isHighlighted(tableRow.index, NaN) ? highlightedColor : 'transparent' }">
 									<!-- Actions button -->
 									<div :class="`table__action--cell actions__button`">
-										<button 
+										<button
 											@blur="handleActionsBlur()"
 											@click="actionsClicked(tableRow.index)">
 											...
