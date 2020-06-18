@@ -48,9 +48,8 @@ export default {
 			includeInactiveDocs: false
 		};
 	},
-	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
 	computed: {
-		oFormFields() {
+		oFormFields: function() {
 			return this.formFields.reduce((agg, cur) => { agg[cur.label] = ''; return agg; }, {});
 		},
 		oFieldSetsLabels: function() {
@@ -63,7 +62,6 @@ export default {
 		},
 	},
 	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
-	methods: {},
 	props: {
 		formFields: Array,
 		searchFunc: Function,
