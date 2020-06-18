@@ -9,7 +9,7 @@
 			</div>
 		</div>
 
-		<search-checkbox v-if="checkboxText">
+		<search-checkbox @checkboxClicked="includeInactiveDocs = true" v-if="checkboxText">
 			<label slot="label">{{ checkboxText }}</label>
 		</search-checkbox>
 
@@ -29,7 +29,8 @@ export default {
 	name: 'search-form',
 	data() {
 		return {
-			oFormFields: this.getFormFields()
+			oFormFields: this.getFormFields(),
+			includeInactiveDocs: false
 		};
 	},
 	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
