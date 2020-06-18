@@ -45,13 +45,12 @@ export default {
 	name: 'search-form',
 	data() {
 		return {
-			oFormFields: this.getFormFields(),
 			includeInactiveDocs: false
 		};
 	},
 	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
-	methods: {
-		getFormFields() {
+	computed: {
+		oFormFields() {
 			return this.formFields.reduce((agg, cur) => { agg[cur.label] = ''; return agg; }, {});
 		},
 		oFieldSetsLabels: function() {
