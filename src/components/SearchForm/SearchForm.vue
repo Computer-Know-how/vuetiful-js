@@ -27,7 +27,7 @@
 			</div>
 		</span>
 
-		<search-checkbox v-if="checkboxText">
+		<search-checkbox @checkboxClicked="includeInactiveDocs = true" v-if="checkboxText">
 			<label slot="label">{{ checkboxText }}</label>
 		</search-checkbox>
 		<div class="btn__container">
@@ -43,8 +43,15 @@ import Checkbox from '../Checkbox/Checkbox.vue';
 
 export default {
 	name: 'search-form',
-	computed: {
-		oFormFields: function() {
+	data() {
+		return {
+			oFormFields: this.getFormFields(),
+			includeInactiveDocs: false
+		};
+	},
+	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
+	methods: {
+		getFormFields() {
 			return this.formFields.reduce((agg, cur) => { agg[cur.label] = ''; return agg; }, {});
 		},
 		oFieldSetsLabels: function() {

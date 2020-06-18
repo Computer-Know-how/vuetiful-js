@@ -17,14 +17,10 @@ export default {
 			checked: ''
 		};
 	},
-	props: {
-		isChecked: Boolean
-	},
 	components: {},
 	methods: {
 		check() {
 			this.checked = this.checked ? '' : 'is-checked';
-			this.isChecked = this.checked;
 			this.$emit('checkboxClicked');
 		}
 	}
