@@ -1,23 +1,54 @@
-@import '../../styles/_variables.scss';
-@import '../../styles/global.scss';
+.radiogroup{
+	text-align: center;
 
-ul.tabs__header {
-	display: block;
-	list-style: none;
-	padding: 0;
-}
-ul.tabs__header > li {
-	padding: 15px 30px;
-	border-radius: 10px;
-	margin: 0;
-	height: 30px;
-	display: inline-block;
-	margin-right: 5px;
-	cursor: pointer;
-}
-ul.tabs__header > li.tab__selected {
-	font-weight: bold;
-	background-color: gray;
-	height: 50px;
-	color: white;
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		display: inline-block;
+		border: 1px solid #b6b6b6;
+		border-radius: 0.2rem;
+
+		input[type=radio] {
+			position: absolute;
+			visibility: hidden;
+		}
+
+		li {
+			margin: 2px;
+			float: left;
+
+			input[type=radio]:checked ~ label {
+				color: white;
+				background-color: #0275db;
+			}
+
+			&:first-of-type label {
+				border-top-left-radius: 0.2rem;
+				border-bottom-left-radius: 0.2rem;
+			}
+
+			&:last-of-type label {
+				border-top-right-radius: 0.2rem;
+				border-bottom-right-radius: 0.2rem;
+			}
+
+			label {
+				display: block;
+				font-weight: 300;
+				font-size: .85em;
+				font-weight: 600;
+				margin: 0;
+				padding: 0 40px;
+				cursor: pointer;
+				transition: all 0.25s linear;
+
+				&:hover {
+					color: #777;
+				}
+			}
+		}
+	}
+
 }

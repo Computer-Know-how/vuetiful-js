@@ -1,7 +1,7 @@
 <template>
 	<div class="search-form" :class="narrow ? 'narrow' : ''">
+		<h2>{{ headerText }}</h2>
 		<span v-if="!fieldSets">
-			<h2>{{ headerText }}</h2>
 			<div class="search-form__container">
 				<div v-for="field in formFields" v-bind:key="field.label" class="search-form__field">
 					<label>{{ field.label }}</label>
@@ -11,8 +11,8 @@
 			</div>
 		</span>
 
+		<vuetiful-tabs v-if="tabs" :labels="labels" ></vuetiful-tabs>
 		<span v-if="fieldSets">
-			<h2 class="search-form_header">{{ headerText }}</h2>
 			<div class="search-form__container">
 				<fieldset v-for="label in oFieldSetsLabels" :key="label">
 					<legend>{{ label }}</legend>
@@ -40,6 +40,7 @@
 import Input from '../Input/Input.vue';
 import Select from '../Select/Select.vue';
 import Checkbox from '../Checkbox/Checkbox.vue';
+import Tabs from '../Tabs/Tabs.vue';
 
 export default {
 	name: 'search-form',
@@ -61,8 +62,9 @@ export default {
 			}, []);
 		},
 	},
-	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select },
+	components: { 'input-field': Input, 'search-checkbox': Checkbox, 'select-field': Select, 'vuetiful-tabs': Tabs },
 	props: {
+		tabs: Boolean,
 		formFields: Array,
 		searchFunc: Function,
 		enableCheckbox: Boolean,
@@ -71,7 +73,8 @@ export default {
 		narrow: Boolean,
 		fieldSets: Boolean,
 		fieldSetLabels: Array,
-		headerText: String
+		headerText: String,
+		labels: Array
 	}
 };
 </script>
