@@ -1,40 +1,22 @@
-<template lang="html">
-  <div>
-    <ul class='tabs__header'>
-      <li v-for='(tab, index) in tabs'
-        :key='tab.title'
-        @click='selectTab(index)'
-        :class='{"tab__selected": (index == selectedIndex)}'>
-        {{ tab.title }}
-      </li>
-    </ul>
-    <slot></slot>
-  </div>
+<template>
+	<div class="radiogroup --fade-in">
+		<ul v-for="(r, index) in this.labels" :key="(r, index)">
+			<li>
+				<input type="radio" :name="r.name" :id="r.id" :v-model="r.model" :value="r.value" @click="(r.func)(r.value)" :checked="r.checked"/>
+				<label :for="r.value">{{ r.label }}</label>
+				<span class="check"></span>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
 export default {
-	props: {},
+	props: {
+		labels: Array
+	},
 	data () {
-		return {
-			selectedIndex: 0, // the index of the selected tab,
-			tabs: []         // all of the tabs
-		};
-	},
-	created () {
-		this.tabs = this.$children;
-	},
-	mounted () {
-		this.selectTab(0);
-	},
-	methods: {
-		selectTab (i) {
-			this.selectedIndex = i;
-			// loop over all the tabs
-			this.tabs.forEach((tab, index) => {
-				tab.isActive = (index === i);
-			});
-		}
+		return {};
 	}
 };
 </script>
