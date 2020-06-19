@@ -13,7 +13,6 @@
 
 		<vuetiful-tabs v-if="tabs" :labels="labels" ></vuetiful-tabs>
 		<span v-if="fieldSets">
-			<!-- <h2 class="search-form_header">{{ headerText }}</h2> -->
 			<div class="search-form__container">
 				<fieldset v-for="label in oFieldSetsLabels" :key="label">
 					<legend>{{ label }}</legend>
