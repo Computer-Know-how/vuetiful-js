@@ -5,7 +5,6 @@
 				<header class="modal-header">
 					<slot name="header">
 						{{ headerMessage }}
-						<button type="button" class="btn btn-close --warning" @click="close" aria-label="Close">X</button>
 					</slot>
 				</header>
 
@@ -40,9 +39,6 @@ export default {
 	methods: {
 		backToDashboard() {
 			EventBus.$emit('redirect', 'dashboard');
-		},
-		close() {
-			this.$emit('close');
 		},
 		retry() {
 			this.$emit('retry');
