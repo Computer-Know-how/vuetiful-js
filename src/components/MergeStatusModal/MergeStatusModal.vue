@@ -32,13 +32,12 @@
 </template>
 
 <script>
-import { EventBus } from '../EventBus/EventBus.js';
 export default {
 	name: 'vuetiful-merge-status-modal',
 	components: {},
 	methods: {
 		backToDashboard() {
-			EventBus.$emit('redirect', 'dashboard');
+			this.$router.push({ name: 'dashboard' });
 		},
 		retry() {
 			this.$emit('retry');
