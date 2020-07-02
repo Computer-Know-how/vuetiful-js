@@ -1,6 +1,13 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/global.scss';
 
+.popup__backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
 .alert-popup {
   margin: auto;
   padding: 30px;
