@@ -2,10 +2,10 @@
 	<div class="table">
 		<div v-if="tableData && tableData.rows && tableData.rows.length > 0" :style="`minWidth: ${minWidth}; maxWidth: ${maxWidth};`">
 			<!-- Table Tools -->
-			<div class="table__tools flex-c-s" v-if="enableTools">
-				<h3 class="title">Merge Listing</h3>
-				<table-input v-if="enableSearch" class="table__tools--search" v-model="searchValue" placeholder="Search" prefixIcon="icon --search"></table-input>
-				<span class="faceted-search__toggle" v-if="enableFacetedSearch" @click="facetedSearchToggled = !facetedSearchToggled"><i class="icon --cog"></i></span>
+			<div class="table__tools flex-c-s" v-if="enableTools || tableTitle">
+				<h4 class="title">{{ tableTitle }}</h4>
+				<table-input v-if="enableTools && enableSearch" class="table__tools--search" v-model="searchValue" placeholder="Search" prefixIcon="icon --search"></table-input>
+				<span class="faceted-search__toggle" v-if="enableTools && enableFacetedSearch" @click="facetedSearchToggled = !facetedSearchToggled; $nextTick(() => { $window.scrollBy(0, 100); });"><i class="icon --cog"></i></span>
 			</div>
 
 			<div class="table__tools--faceted-search flex-c-s" v-if="enableTools && facetedSearchToggled">
@@ -13,14 +13,14 @@
 					<span class="faceted-search__controls">
 						<table-select placeholder="Search" :items="tableData.rows[0].cells" @select="facetedSearchContext = $event" itemsKey="data"></table-select>
 						<table-input :placeholder="`Filter by: ${facetedSearchContext}`" :value="facetedSearchFilterValue" @input="facetedSearchFilterValue = $event" prefixIcon="icon --cog"></table-input>
-						<button class="btn --primary" @click="addFilter()">Filter</button>
+						<button class="dqm-btn --primary" @click="addFilter()">Filter</button>
 					</span>
 
 					<span class="faceted-search__filters-container" v-show="facetedFilters.length">
 						<h6>All Filters:</h6>
 						<div class="faceted-search__filters">
 							<span class="faceted-search__filter" v-for="(filter, index) in facetedFilters" :key="index" @click="removeFilter(index)">
-								<span class="btn --light">
+								<span class="dqm-btn --primary-outline">
 									<i class="icon --times"></i>{{ filter.column + ': ' + filter.value }}
 								</span>
 							</span>
@@ -85,7 +85,7 @@
 							v-show="tableRow.show && !tableRow.filtered && !(pagination && !tableRow.inPage) && !(i === 0 && headerInfirstRow) && (!(tableRow.options && tableRow.options.accordion) || accordions[tableRow.options.accordion.accordionId].show)"
 							:id="`table__row-${tableRow.index}`"
 							:class="`table__row flex-c ${rowStripe && i % 2 === 0 ? 'is-striped' : ''} ${tableBorder}`"
-							:style="{ height: rowHeight + 'px' }"
+							:style="{ height: rowHeight + 'px', cursor: tableRow.options && tableRow.options.accordion ? 'pointer' : '' }"
 							@click="onClickRow(tableRow, tableRow.index, tableRow.options)">
 							<!-- Row checkbox -->
 							<div
@@ -100,6 +100,13 @@
 								</div>
 							</div>
 
+							<div
+								v-if="tableRow.cells.some(i => Array.isArray(i.data) && i.data.length > 2)"
+								@click="expandCell($event, tableRow.index)"
+								class="expand-arrow"
+							>
+								<span><i class="icon --expand"></i></span>
+							</div>
 
 							<!-- Table Body cells -->
 							<div
@@ -131,14 +138,7 @@
 								<span v-if="tableRow.options && tableRow.options.icon"
 									:class="`accordion-icon icon --${tableRow.options.icon}`">
 								</span>
-								<div
-									v-if="Array.isArray(tableCell.data) && tableCell.data.length > 2"
-									@click="expandCell($event, tableRow.index, tableCell, j)"
-									class="expand-arrow"
-								>
-									<span><i class="icon --down"></i></span>
 
-								</div>
 								<span
 									v-if="typeof tableCell.data == 'string'"
 									:class="`table__cell-content ${ i !== 0 ? 'fill-width' : '' }`"
@@ -199,8 +199,7 @@
 								v-if="selectableRows"
 								:class="`table__select flex-c-c ${tableBorder}`">
 									<button
-										class="btn --primary flex-c-c"
-										:class="{ 'is-selected': tableRow.selected }"
+										:class="`dqm-btn ${tableRow.selected ? 'is-selected --primary-outline' : '--primary'} flex-c-c`"
 										@click.stop="onSelectRow(tableRow, tableRow.index)">
 										{{ tableRow.selected ? 'Deselect' : 'Select' }}
 									</button>
@@ -294,6 +293,7 @@ export default {
 		sourceData                  () { return (Array.isArray(this.params.data)) ? this.params.data : []; },
 		visibleActions              () { return (Array.isArray(this.params.data) && this.params.actionsConfig) ? this.params.data.reduce((agg, cur, i) => { agg[i] = false; return agg; }, {}) : {}; },
 		tableBorder                 () { return (this.params.border) ? 'show-border' : ''; },
+		tableTitle                 () { return (this.params.title) ? this.params.title : ''; },
 		selectableRows              () { return (this.params.selectable) ? true : false; },
 		fixedColumns                () { return (this.params.fixedColumns) ? this.params.fixedColumns : []; },
 		actionsEnabled              () { return (this.params.actionsConfig) ? true : false; },
@@ -673,6 +673,10 @@ export default {
 				for(let childId of accordion.child){
 					this.toggleAccordion(this.accordions[childId], topLevelExpanded, current.expanded);
 				}
+			}
+
+			if (current.show) {
+				this.$nextTick(() => { window.scrollBy(0, 100); });
 			}
 		},
 		/**
@@ -1058,13 +1062,14 @@ export default {
 		/**
 		 * @function - Expand cell
 		 */
-		expandCell(event, rowIndex, cell, cellIndex) {
+		expandCell(event, rowIndex) {
 			const row = document.querySelector(`#table__row-${rowIndex}`);
-			row.style.height = `${cell.data.length*40}px`;
+			const cells = [...this.tableData.rows[rowIndex].cells];
+			const largestCellIndex = cells.reduce((maxI,el,i,arr) => el.data.length>arr[maxI].length ? i : maxI, 0);
+			row.style.height = `${this.tableData.rows[rowIndex].cells[largestCellIndex].data.length*40}px`;
 			row.children[1].children[0].style.display = 'none';
-			document.querySelector(`#table__cell-${cellIndex}`).style.overflowY = 'hidden';
-
-			return;
+			document.querySelector(`#table__cell-${largestCellIndex}`).style.overflowY = 'hidden';
+			this.$nextTick(() => { 	row.scrollIntoView(); });
 		},
 		/**
 		 * @function - Add a filter to faceted filter search

@@ -2,57 +2,111 @@
 @import '../../styles/global.scss';
 
 .sidebar {
+	&, & * {
+		transition: all 0.3s cubic-bezier(0, 0.55, 0.45, 1);
+		user-select: none;
+	}
   position: fixed;
-  /* Top spacing must be equal to navbar--height to prevent over-lapping */
-	top: $navbar--height;
 	z-index: 100;
   height: $sidebar--height;
   width: $sidebar--width;
 	background-color: $sidebar--color;
-	/* Offset the sidebar by it's width, this will move the sidebar out of the viewport
-    and allow for animation back into the viewport */
-	left: -$sidebar--width;
+	padding-top: 2em;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
 
   ul {
-    margin: $sidebar__list--margin-top $sidebar__list--margin-left;
+    margin: 2em $sidebar__list--margin-left;
     list-style-type: none;
     text-align: left;
-    padding-top: 4.5px;
+		width: 100%;
 
     li {
       height: $sidebar__item--height;
-      width: $sidebar__item--width;
+      max-width: $sidebar__item--width;
       margin-bottom: $sidebar__item--margin-bottom;
-      padding-top: 4.5px;
-      padding-left: 20px;
-      /* Top padding to push the text down in proportion to the height of the element */
+			padding-top: 0.45em;
+			padding-left: 0.575em;
       font-size: 0.9em;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    li.active {
-      background-color: #e87511;
-      color: #ffffff;
-    }
-    .active::after {
-      content: "";
-      width: 20px;
-      height: 20px;
-      display: block;
-      margin-left: 140px;
-      margin-top: -20px;
-      background-color: #e87511;
-      -webkit-transform: rotate(47deg) skew(5deg);
-      -moz-transform: rotate(47deg) skew(5deg);
-      transform: rotate(47deg) skew(5deg);
-    }
+      font-weight: 500;
+			cursor: pointer;
+			border-radius: 0.25rem;
+			line-height: 1.5rem;
+			transition: all 0.1s ease-in;
+			position: relative;
+			overflow: hidden;
+
+			span:nth-of-type(2) {
+				opacity: 1;
+				margin-left: 2em;
+			}
+
+			svg {
+				transition: color 0s;
+
+				color: #e87511;
+			}
+
+			span {
+				position: absolute;
+				margin: auto;
+			}
+
+			&.active {
+				box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.4);
+			}
+
+			&.active, &:hover {
+				background-color: #e87511;
+
+				&, * {
+					color: white;
+				}
+			}
+
+			&.last-el.bottom {
+				padding-top: 0.45em;
+				padding-left: 0.5em;
+
+				&:hover {
+					background-color: #cc670f;
+					&, * { color: white; }
+				}
+
+				span:nth-of-type(2) {
+					margin-left: 3em;
+				}
+
+				svg {
+					color: white;
+				}
+			}
+		}
   }
 }
 .sidebar.hidden {
-  animation: slide-out 0.2s forwards;
-	-webkit-animation: slide-out 0.2s forwards;
-}
-.sidebar.visible {
-  animation: slide-in 0.2s forwards;
-	-webkit-animation: slide-in 0.2s forwards;
+	width: 3.5em;
+	padding: 2em 0.2em 0 0.2em;
+
+	ul {
+		width: 100%;
+		padding: 0 0.4em;
+		margin: 2em 0;
+
+		li {
+			padding-top: 0.45em;
+			padding-left: 0.7em;
+			max-width: 100%;
+
+			&.active, &:hover {
+				transition: all 0.1s ease-in;
+				background-color: #e87511;
+
+				* {
+					color: white;
+				}
+			}
+		}
+	}
 }

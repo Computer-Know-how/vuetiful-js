@@ -1,13 +1,14 @@
-.radiogroup{
+.radiogroup {
 	text-align: center;
+	height: 2em;
 
 	ul {
 		list-style: none;
+		height: 100%;
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
 		display: inline-block;
-		border: 1px solid #b6b6b6;
 		border-radius: 0.2rem;
 
 		input[type=radio] {
@@ -16,22 +17,25 @@
 		}
 
 		li {
-			margin: 2px;
 			float: left;
+			height: 100%;
+			line-height: 1.75em;
 
 			input[type=radio]:checked ~ label {
-				color: white;
-				background-color: #0275db;
+				color: #e87511;
+				background-color: #fff;
 			}
 
 			&:first-of-type label {
 				border-top-left-radius: 0.2rem;
 				border-bottom-left-radius: 0.2rem;
+				border-left: 1px #d7d8da solid;
 			}
 
 			&:last-of-type label {
 				border-top-right-radius: 0.2rem;
 				border-bottom-right-radius: 0.2rem;
+				border-right: 1px #d7d8da solid;
 			}
 
 			label {
@@ -42,10 +46,17 @@
 				margin: 0;
 				padding: 0 40px;
 				cursor: pointer;
-				transition: all 0.25s linear;
+				transition: all 0.1s linear;
+				height: 100%;
+				border-top: 1px #d7d8da solid;
+				border-bottom: 1px #d7d8da solid;
+				border-left: 1px #d7d8da solid;
+				color: #9d9fa6;
+				background-color: #f5f6f9;
 
 				&:hover {
-					color: #777;
+					color: #e87511;
+					background-color: #f5f6f9;
 				}
 			}
 		}

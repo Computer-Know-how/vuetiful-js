@@ -1,5 +1,6 @@
 <template>
 	<div class="search-form" :class="narrow ? 'narrow' : ''">
+		<vuetiful-tabs class="search-form__tabs" v-show="tabs" :labels="labels"></vuetiful-tabs>
 		<h2>{{ headerText }}</h2>
 		<span v-if="!fieldSets">
 			<div class="search-form__container">
@@ -11,16 +12,15 @@
 			</div>
 		</span>
 
-		<vuetiful-tabs v-if="tabs" :labels="labels" ></vuetiful-tabs>
 		<span v-if="fieldSets">
 			<div class="search-form__container">
 				<fieldset v-for="label in oFieldSetsLabels" :key="label">
 					<legend>{{ label }}</legend>
-					<span v-for="field in formFields" :key="field.label" class="field-set-form__field">
+					<span v-for="field in formFields" :key="field.slug" class="field-set-form__field">
 						<span v-if="label === field.group" >
 							<label>{{ field.label }}</label>
-							<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.label]" v-model="oFormFields[field.label]" :type="field.type"></input-field>
-							<select-field v-else :items="field.items"></select-field>
+							<input-field v-if="field.type !== 'dropdown'" :alt="oFormFields[field.slug]" v-model="oFormFields[field.slug]" @input="emitEvent('searchValueSet', oFormFields)" :type="field.type"></input-field>
+							<select-field v-else @select="emitEvent('searchValueSet', oFormFields)" :items="field.items"></select-field>
 						</span>
 					</span>
 				</fieldset>
@@ -30,8 +30,8 @@
 		<search-checkbox @checkboxClicked="includeInactiveDocs = true" v-if="checkboxText">
 			<label slot="label">{{ checkboxText }}</label>
 		</search-checkbox>
-		<div class="btn__container">
-			<button :class="button.class" class="btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
+		<div class="btn__container dqm-pod__block" alignment="end">
+			<button right :class="button.class" class="dqm-btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
 		</div>
 	</div>
 </template>
@@ -51,7 +51,7 @@ export default {
 	},
 	computed: {
 		oFormFields: function() {
-			return this.formFields.reduce((agg, cur) => { agg[cur.label] = ''; return agg; }, {});
+			return this.formFields.reduce((agg, cur) => { agg[cur.slug] = ''; return agg; }, {});
 		},
 		oFieldSetsLabels: function() {
 			return this.formFields.reduce((agg, cur) => {
@@ -79,6 +79,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './SearchForm.scss';
 </style>

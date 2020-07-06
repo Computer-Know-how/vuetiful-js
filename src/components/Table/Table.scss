@@ -2,12 +2,9 @@
 @import '../../styles/global.scss';
 
 .table {
-	width: 96%;
 	display: block;
 	box-sizing: border-box;
 	font-size: $table__cell--font-size;
-	margin-left: auto;
-	margin-right: auto;
 	color: $table__cell--font-color;
 	padding: $table__cell--padding;
 	background-color: white;
@@ -22,8 +19,9 @@
 
 .table__row {
 	box-sizing: border-box;
-	border-bottom: 2px solid $table--border-color;
+	border-bottom: 0.01em solid #00000020;
 	background-color: transparent;
+	position: relative;
 
 	&.is-striped {
 		background-color: $table--striped-color;
@@ -43,6 +41,10 @@
 
 	.accordion__icon {
 		cursor: pointer;
+
+		span {
+			color: #e87511 !important;
+		}
 	}
 
 	div:first-child{
@@ -60,7 +62,7 @@
 
 .table__row.is-header,
 .table__cell.is-header {
-	font-weight: 800 !important;
+	font-weight: 500 !important;
 }
 
 .table__select, .table__select--link {
@@ -96,7 +98,7 @@
 .table__select--link {
 	& > button {
 		margin-right: 80px;
-		color:#0275db;
+		color:#e87511;
 		background-color: transparent;
 		box-shadow: 0px 0px 0px transparent;
 		border: 0px solid transparent;
@@ -153,6 +155,38 @@
 	}
 }
 
+.expand-arrow {
+	height: 30px;
+	width: 20px;
+	z-index: 100;
+	position: absolute;
+	left: 3.75em;
+	display: flex;
+	cursor: pointer;
+	top: 2.3em;
+
+	span {
+		height: 1em;
+		width: 1em;
+		opacity: 75%;
+		margin-left: auto;
+		margin-right: 1.5em;
+
+		&:hover > i{
+			transition: all 0.1s linear;
+			color: #e8751199;
+		}
+
+		i {
+			transition: all 0.1s linear;
+			font-size: 14pt;
+			font-weight: 400;
+			color: #e87511;
+
+		}
+	}
+}
+
 .table__cell {
 	box-sizing: border-box;
 	height: 100%;
@@ -162,25 +196,6 @@
 	-ms-flex: 1;
 	flex: 1;
 	border: none;
-
-	.expand-arrow {
-		height: 30px;width: 190px;
-		z-index: 100;
-		position: absolute;
-		display: flex;
-		cursor: pointer;
-		margin-top: 45px;
-
-		span {
-			margin: auto;
-			margin-bottom: 10px;
-			opacity: 75%;
-
-			i {
-				font-size: 14pt;
-			}
-		}
-	}
 
 	&.--multi-cell {
 		height: 75px default; max-width: 200px;
@@ -213,7 +228,16 @@
 		padding-left: 20px;
 		display: flex;
 		position: relative;
-		border-bottom: $table--border-left-width solid #00000040;
+
+		&::after {
+			content: "";
+			position: absolute;
+			// margin-bottom: -9px;
+			// margin-left: 10px;
+			background-color: #00000020;
+			width: 50px;
+			height: 0.01em;
+		}
 
 		p {
 			margin: auto;
@@ -231,6 +255,8 @@
 
 	h4 {
 		padding-top: 5px;
+		text-align: left;
+		margin-right: auto;
 	}
 
 	.faceted-search__toggle {
@@ -242,13 +268,15 @@
 
 		&:hover {
 			i {
+				transition: all 0.1s linear;
 				color: $gray-light;
 			}
 		}
 
 		i {
+			transition: all 0.1s linear;
 			font-size: 21pt;
-			color: $gray;
+			color: #e87511;
 		}
 	}
 
@@ -260,12 +288,13 @@
 }
 
 .table__tools--faceted-search {
-	background-color: #E5F5FF;
+	background-color: #EAF1F7;
 	margin-left: 10px;
 	margin-right: 10px;
 	height: 70px;
 	padding-top: 20px;
 	padding-left: 20px;
+	border-radius: 0.5rem;
 
 	.faceted-search--container {
 		align-self: flex-start;
@@ -348,18 +377,18 @@
 		cursor: pointer;
 	}
 	.sort--ascending {
-		border-bottom-color: #c0c4cc;
+		border-bottom-color: #d7d8da;
 		bottom: 2px;
 	}
 	.sort--descending {
-		border-top-color: #c0c4cc;
+		border-top-color: #d7d8da;
 		top: 2px;
 	}
 	.sort--ascending.activated {
-		border-bottom-color: #409eff;
+		border-bottom-color: #e87511;
 	}
 	.sort--descending.activated {
-		border-top-color: #409eff;
+		border-top-color: #e87511;
 	}
 }
 

@@ -33,14 +33,14 @@
     "url": "https://github.com/Haeven/vuetiful/issues"
   },
   "description": "A collection library of custom dynamic Vue components.",
-  "name": "rb-dqm-app",
-  "version": "0.1.0",
+  "name": "vuetiful-js",
+  "version": "1.4.8",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "vue-build": "vue-cli-service build",
-    "build": "webpack --config build/webpack.config.dev.js",
-    "lint": "vue-cli-service lint"
+    "build": "node src/build/build.js && webpack --config build/webpack.config.base.js",
+    "dev": "node src/build/utils/generate-app-entry.js && vue-cli-service serve --open",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "public-rebase": "git fetch upstream master && git merge upstream/master"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -50,8 +50,7 @@
     "core-js": "^3.4.4",
     "vue": "^2.6.10",
     "vue-chartjs": "^3.5.0",
-    "vue-router": "^3.1.5",
-    "vuetiful-js": "https://github.com/Computer-Know-how/vuetiful-js"
+    "vue-router": "^3.1.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
@@ -75,16 +74,8 @@
   "homepage": "https://github.com/Haeven/vuetiful#readme",
   "license": "MIT",
   "main": "/src/index.js",
-  "name": "vuetiful-js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/Haeven/vuetiful.git"
-  },
-  "scripts": {
-    "build": "node src/build/build.js && webpack --config build/webpack.config.base.js",
-    "dev": "node src/build/utils/generate-app-entry.js && vue-cli-service serve --open",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"public-rebase": "git fetch upstream master && git merge upstream/master"
-  },
-  "version": "1.4.8"
+  }
 }

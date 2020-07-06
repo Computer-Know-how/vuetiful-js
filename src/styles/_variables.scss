@@ -18,9 +18,9 @@ $brand-info: #5bc0de !default;
 $brand-warning: #f0ad4e !default;
 $brand-danger: #d9534f !default;
 
-$blue: #0275db !default;
-$blue-darker: darken(#0275db, 6.5%) !default;
-$blue-dark: darken(#0275db, 20%) !default;
+$blue: #e87511 !default;
+$blue-darker: darken(#e87511, 6.5%) !default;
+$blue-dark: darken(#e87511, 20%) !default;
 $blue-secondary: #21579E;
 
 
@@ -85,7 +85,7 @@ $input-text--font-size: 10pt;
 //##
 $navbar--height: 50px;
 $navbar--width: 100%;
-$navbar--background-color: $blue-dark;
+$navbar--background-color: #FFFFFF;
 
 //NavBar item
 $navbar__item--width: fit-content;
@@ -95,7 +95,7 @@ $navbar__item--width: fit-content;
 //##
 $sidebar--height: 100%;
 $sidebar--width: 200px;
-$sidebar--color: #f2f2f2;
+$sidebar--color: #FFFFFF;
 
 // Sidebar list
 $sidebar__list--margin-top: 20px;
@@ -103,7 +103,7 @@ $sidebar__list--margin-left: -24px;
 
 // Sidebar list item
 $sidebar__item--margin-bottom: 20px;
-$sidebar__item--height: 30px;
+$sidebar__item--height: 35px;
 $sidebar__item--width: 170px;
 
 
@@ -117,7 +117,7 @@ $popup--width: 500px;
 $popup__btn--padding-left: 15px;
 $popup__btn--padding-right: 15px;
 $popup__btn-border--width: 2px;
-$popup__btn--color: #0275db;
+$popup__btn--color: #e87511;
 
 
 //== AlertPopUp
@@ -157,7 +157,7 @@ $search-form__field--min-width: 227.95px;
 
 // SearchForm
 $search-form--height: fit-content;
-$search-form--padding: 30px;
+$search-form--padding: 1em;
 $search-form--margin: 30px;
 $search-form--width: $search-form__field--min-width * 5 + 75px;
 $search-form--mobile-width: 200px;
@@ -171,11 +171,11 @@ $search-form__btn--mobile-width: 80px;
 //== Table
 //
 //##
-$table--border-color: grey;
+$table--border-color: #aaa;
 $table--border-right-width: 1px;
 $table--border-left-width: 1px;
 $table--hover-color: #f5f7fa;
-$table--striped-color: #f9f9f9;
+$table--striped-color: #fbfbfb;
 
 // Table cell
 $table__cell--font-size: 13px;
@@ -195,7 +195,7 @@ $table__action--width: 60px;
 //
 //##
 $checkbox--dimensions: 19px;
-$checkbox--color: $blue;
-$checkbox--border-color: black;
+$checkbox--color: #e87511;
+$checkbox--border-color: #e87511;
 $checkbox--border-width: 1px;
 $checkbox--border-radius: 2px;

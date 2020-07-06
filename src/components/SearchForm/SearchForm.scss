@@ -1,13 +1,22 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/global.scss';
+@include screen-transition-animation;
 
 .search-form {
-	padding: $search-form--padding;
+	padding-top: $search-form--padding;
+	padding-bottom: $search-form--padding;
 	text-align: left;
 	min-width: $search-form__field--min-width + 50px;
-	margin-left: auto;
-	margin-right: auto;
-	width: 96%;
+	background-color: #fff;
+	border-radius: 0.5rem;
+
+	.search-form__tabs {
+		margin-bottom: 1em;
+		position: absolute;
+		top: -2.5em;
+		left: 46.5%;
+		margin-left: -$search-form__field--min-width;
+	}
 
 	.search-form__container {
 		height: fit-content;
@@ -18,21 +27,23 @@
 
 	legend {
 		width: fit-content;
-		background-color: #f6f6f6;
+		background-color: #fff;
 		color: #000;
 		padding: 3px 6px;
 		font-size: 1em;
+		font-weight: 500;
 	}
 
-	input {
+	input, .select__container {
 		margin-bottom: 1rem;
+		border-radius: 0.5em;
 	}
 
 	fieldset {
 		flex: 1;
 		margin-right: 1rem;
 		padding: 0 10px 10px 10px;
-		border: 1px solid #b6b6b6;
+		border-top: 1px solid #00000020;
 		margin-bottom: 2rem;
 		min-width: $search-form__field--min-width + 10px;
 

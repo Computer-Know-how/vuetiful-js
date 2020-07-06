@@ -1,15 +1,29 @@
 <template>
 	<div class="sidebar">
+		<span>
 		<ul>
 			<li v-for="item in navigableItems"
+				class="sidebar__item"
 				:class="(loadedPage === item.location || item.location === '/dashboard' && loadedPage == '/') ? 'active' : ''"
-				:id="`sidebar-item--${item.slug}`"
+				:id="`sidebar__item--${item.slug}`"
 				v-bind:key="item.slug"
 				v-show="!item.permissionLevel || userPermissionLevel >= item.permissionLevel"
-				@click="redirect(item.location, item.slug)">
-				{{ item.label }}
+				@click="redirect(item.location, item.slug)"
+			>
+				<span><b-icon :font-scale="1.2" v-if="item.icon" :icon="item.icon"></b-icon></span>
+				<span>{{ item.label }}</span>
 			</li>
 		</ul>
+		</span>
+		<span>
+			<ul>
+				<li class="last-el bottom" util-class="background-primary">
+					<span><b-icon :font-scale="1.5" icon="door-closed-fill"></b-icon></span>
+					<span>Logout</span>
+				</li>
+			</ul>
+		</span>
+		<!-- <b-icon :font-scale="1.5" v-if="item.icon" :icon="item.icon"></b-icon> -->
 	</div>
 </template>
 
@@ -30,14 +44,13 @@ export default {
 		*/
 		navigableItems: Array,
 		/* The permission level of the current user */
-		userPermissionLevel: Number
+		userPermissionLevel: Number,
+		expanded: Boolean
 	},
 	methods: {
 		redirect(location, activeSlug) {
-			this.navigableItems.map(inactive => {
-				(inactive.slug != activeSlug)
-					? document.querySelector(`#sidebar-item--${inactive.slug}`).classList.remove('active')
-					: document.querySelector(`#sidebar-item--${activeSlug}`).classList.add('active');
+			this.navigableItems.map(i => {
+				document.querySelector(`#sidebar__item--${i.slug}`).classList.remove('active');
 			});
 
 			if(activeSlug !== this.$router.currentRoute.name) {
