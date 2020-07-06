@@ -200,7 +200,7 @@
 								:class="`table__select flex-c-c ${tableBorder}`">
 									<button
 										:class="`dqm-btn ${tableRow.selected ? 'is-selected --primary-outline' : '--primary'} flex-c-c`"
-										@click.stop="onSelectRow(tableRow, tableRow.index)">
+										@click.stop="onSelectRow(tableRow, tableRow.index, tableRow.selected)">
 										{{ tableRow.selected ? 'Deselect' : 'Select' }}
 									</button>
 							</div>
@@ -287,7 +287,8 @@ export default {
 		params: {
 			type: Object,
 			default: () => { return {}; }
-		}
+		},
+		deselected: [Boolean, String]
 	},
 	computed: {
 		sourceData                  () { return (Array.isArray(this.params.data)) ? this.params.data : []; },
@@ -371,6 +372,16 @@ export default {
 		},
 	},
 	watch: {
+		deselected: {
+			handler(rowId) {
+				if (rowId) {
+					const index = this.tableData.rows.findIndex(i => i.cells[0].data == rowId);
+					const row = this.tableData.rows[index];
+					this.onSelectRow(row, index, true);
+					this.$emit('deselectProcessed');
+				}
+			}
+		},
 		params: {
 			handler() {
 				this.searchValue = '';
@@ -638,11 +649,13 @@ export default {
 			this.$emit('select', tableRow.checked, rowIndex, this.getRowDataFromTableRow(tableRow));
 			this.$emit('selectionChange', this.getRowDatas(true, 'checked'), this.getCheckedRowIndices(true), this.getCheckedRowNum(true));
 		},
-		onSelectRow(tableRow) {
+		onSelectRow(tableRow, index, deselect) {
 			if (!this.selectableRows) return;
 
 			tableRow.selected = !tableRow.selected;
-			this.$emit('selectionChange', this.getRowDatas(true, 'selected'), tableRow);
+			(deselect)
+				? this.$emit('deselect', tableRow)
+				: this.$emit('selectionChange', this.getRowDatas(true, 'selected'), tableRow);
 		},
 		/**
 		 * @function - Click Row Event
