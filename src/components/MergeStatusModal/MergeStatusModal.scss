@@ -1,0 +1,101 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/global.scss';
+
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9;
+}
+
+.modal {
+	background: #FFFFFF;
+	box-shadow: 2px 2px 20px 1px;
+	overflow-x: auto;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	margin-left: 0;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+	max-height: 16em;
+	width: 500px;
+	text-align: center;
+	box-shadow: 5px 5px 12px -2px #333;
+	-webkit-box-shadow: 5px 5px 12px -2px #333;
+	box-shadow: 5px 5px 12px -2px #333;
+}
+.modal-fade-enter,
+.modal-fade-leave-active {
+	opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+	transition: opacity .5s ease
+}
+
+.modal-header {
+	justify-content: space-between;
+	border-bottom: 1px solid #b9b9b9;
+	color: black;
+	height: 3em;
+	margin: 0 2em;
+	padding: 1em 0;
+}
+
+.modal-footer {
+	border-top: 1px solid #eeeeee;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: row-reverse;
+	margin: 0 2em;
+	padding: 1em 0;
+}
+
+.success-icon,
+.error-icon {
+    position: relative;
+    height: 1.1em; /* this can be anything */
+    width: 1.1em;  /* ...but maintain 1:1 aspect ratio */
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+	border-radius: 40px;
+	background-color: red;
+	color: white;
+	font-weight: bold;
+	font-size: 3.9em;
+	margin-bottom: 0.2em;
+}
+.success-icon {
+	background-color: green;
+	height: 1.3em;
+	width: 1.3em;
+}
+
+.modal-body {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid #b9b9b9;
+	color: black;
+	height: 3em;
+	margin: 0 2em;
+	padding: 1em 0;
+	align-items: center;
+}
+
+p {
+	margin: auto;
+	margin-left: 0;
+}

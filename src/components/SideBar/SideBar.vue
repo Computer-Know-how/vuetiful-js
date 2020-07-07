@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { EventBus } from '../EventBus/EventBus.js';
 export default {
 	name: 'vuetiful-side-bar',
 	props: {
@@ -53,15 +54,26 @@ export default {
 				document.querySelector(`#sidebar__item--${i.slug}`).classList.remove('active');
 			});
 
-			if(activeSlug !== this.$router.currentRoute.name) {
-				this.$router.push(activeSlug);
+			if(slug !== this.$router.currentRoute.name) {
+				this.$router.push(slug);
 			}
 		}
 	},
 	computed: {
+		console: () => console,
 		loadedPage: function () {
 			return this.$router.currentRoute.path;
 		}
+	},
+	mounted: function() {
+		// register global event handler
+		EventBus.$on('redirect', url => {
+			this.redirect(url);
+		});
+	},
+	beforeDestroy: function() {
+		// deregister global event handler
+		EventBus.$off('redirect');
 	}
 };
 </script>

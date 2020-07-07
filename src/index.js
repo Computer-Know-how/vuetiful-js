@@ -10,6 +10,7 @@ import AlertBox from './components/AlertBox/AlertBox.vue';
 import AlertPopUp from './components/AlertPopUp/AlertPopUp.vue';
 import Checkbox from './components/Checkbox/Checkbox.vue';
 import Input from './components/Input/Input.vue';
+import MergeStatusModal from './components/MergeStatusModal/MergeStatusModal.vue';
 import NavBar from './components/NavBar/NavBar.vue';
 import PopUp from './components/PopUp/PopUp.vue';
 import QuickPeek from './components/QuickPeek/QuickPeek.vue';
@@ -21,7 +22,7 @@ import Table from './components/Table/Table.vue';
 import Tabs from './components/Tabs/Tabs.vue';
 
 /* Export components individually */
-export { AlertBox, AlertPopUp, Checkbox, Input, NavBar, PopUp, QuickPeek, SearchForm, Select, SideBar, SideModal, Table, Tabs };
+export { AlertBox, AlertPopUp, Checkbox, Input, MergeStatusModal, NavBar, PopUp, QuickPeek, SearchForm, Select, SideBar, SideModal, Table, Tabs };
 
 /* Use every component when the library is installed as a Vue plugin */
 function install(Vue) {
@@ -29,6 +30,7 @@ function install(Vue) {
 	Vue.component('vuetiful-alert-pop-up', AlertPopUp);
 	Vue.component('vuetiful-checkbox', Checkbox);
 	Vue.component('vuetiful-input', Input);
+	Vue.component('vuetiful-merge-status-modal', MergeStatusModal);
 	Vue.component('vuetiful-nav-bar', NavBar);
 	Vue.component('vuetiful-pop-up', PopUp);
 	Vue.component('vuetiful-quick-peek', QuickPeek);
