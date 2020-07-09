@@ -6,6 +6,7 @@
 				class="sidebar__item"
 				:class="(loadedPage === item.location || item.location === '/dashboard' && loadedPage == '/') ? 'active' : ''"
 				:id="`sidebar__item--${item.slug}`"
+				:ref="`sidebar__item--${item.slug}`"
 				v-bind:key="item.slug"
 				v-show="!item.permissionLevel || userPermissionLevel >= item.permissionLevel"
 				@click="redirect(item.location, item.slug)"
@@ -49,10 +50,6 @@ export default {
 	},
 	methods: {
 		redirect(location, activeSlug) {
-			this.navigableItems.map(i => {
-				document.querySelector(`#sidebar__item--${i.slug}`).classList.remove('active');
-			});
-
 			if(activeSlug !== this.$router.currentRoute.name) {
 				this.$router.push(activeSlug);
 			}
@@ -65,8 +62,10 @@ export default {
 	},
 	watch: {
 		$route (to, from) {
-			document.querySelector(`#sidebar-item--${from.name}`).classList.remove('active');
-			document.querySelector(`#sidebar-item--${to.name}`).classList.add('active');
+			const fromRoute = this.$refs[`sidebar-item--${from.name}`];
+			const toRoute = this.$refs[`sidebar-item--${to.name}`];
+			if (fromRoute) fromRoute.classList.remove('active');
+			if (toRoute) toRoute.classList.add('active');
 		}
 	}
 };

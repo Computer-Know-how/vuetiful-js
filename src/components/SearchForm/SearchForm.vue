@@ -31,7 +31,7 @@
 			<label slot="label">{{ checkboxText }}</label>
 		</search-checkbox>
 		<div class="btn__container dqm-pod__block" alignment="end">
-			<button right :class="button.class" class="dqm-btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
+			<button right :class="button.class" class="dqm-btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)" btn-elevated> {{ button.text }} </button>
 		</div>
 	</div>
 </template>
