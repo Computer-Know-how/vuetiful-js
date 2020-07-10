@@ -62,12 +62,6 @@ export default {
 		loadedPage: function () {
 			return this.$router.currentRoute.path;
 		}
-	},
-	watch: {
-		$route (to, from) {
-			document.querySelector(`#sidebar-item--${from.name}`).classList.remove('active');
-			document.querySelector(`#sidebar-item--${to.name}`).classList.add('active');
-		}
 	}
 };
 </script>

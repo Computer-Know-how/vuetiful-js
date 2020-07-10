@@ -70,6 +70,14 @@ div h1 {
 }
 
 /*
+  Themed Components
+*/
+/* Pod */
+.dqm-view-container > .dqm-pod {
+	background-color: #fff;;
+}
+
+/*
   Controls
 */
 /* Buttons */
@@ -266,6 +274,7 @@ input.placeholder-dark:-ms-input-placeholder { color:#909399; }
 .icon.--trash:before { content: '\f1f8'; }
 .icon.--history:before { content: '\f1da'; }
 .icon.--search:before { content: '\f002'; }
+.icon.--rules:before { content: '\f06e'; }
 .icon.--nav:before { content: '\f0c9'; }
 .icon.--arrow-right:before { content: '\f061'; }
 .icon.--envelope:before { content: '\f0e0'; }

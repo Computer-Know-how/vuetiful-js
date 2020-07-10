@@ -34,7 +34,7 @@
 				<!-- Table Header -->
 				<div
 					v-if="headerInfirstRow"
-					:class="`table__row flex-c is-header ${rowStripe} ${tableBorder}`"
+					:class="`table__row flex-c is-header ${rowStripe} ${highlightHeader} ${tableBorder}`"
 					:style="`height: ${headerHeight}px; ${headerDropShadow ? 'box-shadow:' + headerDropShadow + '; border-bottom: none;' : ''}`"
 					@click="onClickRow(tableData.rows[0], 0)">
 					<!-- "Check All" checkbox -->
@@ -182,9 +182,10 @@
 									<!-- Actions button -->
 									<div :class="`table__action--cell actions__button`">
 										<button
-											@blur="handleActionsBlur()"
+											class="dqm-btn --secondary flex-c-c"
 											@click="actionsClicked(tableRow.index)">
-											...
+											<!-- @blur="handleActionsBlur()"> this happens before clicked event and clicked never gets handled -->
+											<span :class="`fa ${actionsIcon}`"></span>
 										</button>
 									</div>
 
@@ -294,16 +295,18 @@ export default {
 		sourceData                  () { return (Array.isArray(this.params.data)) ? this.params.data : []; },
 		visibleActions              () { return (Array.isArray(this.params.data) && this.params.actionsConfig) ? this.params.data.reduce((agg, cur, i) => { agg[i] = false; return agg; }, {}) : {}; },
 		tableBorder                 () { return (this.params.border) ? 'show-border' : ''; },
-		tableTitle                 () { return (this.params.title) ? this.params.title : ''; },
+		tableTitle                  () { return (this.params.title) ? this.params.title : ''; },
 		selectableRows              () { return (this.params.selectable) ? true : false; },
 		fixedColumns                () { return (this.params.fixedColumns) ? this.params.fixedColumns : []; },
 		actionsEnabled              () { return (this.params.actionsConfig) ? true : false; },
+		actionsIcon					() { return (this.params.actionsConfig && this.params.actionsConfig.icon) ? this.params.actionsConfig.icon : '...'; },
 		actionsConfig               () { return (this.params.actionsConfig && this.params.actionsConfig.actions) ? this.params.actionsConfig.actions : []; },
 		quickPeekEnabled            () { return (this.params.quickPeekConfig) ? true : false; },
 		quickPeekHeaders            () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.headers) ? this.params.quickPeekConfig.headers : []; },
 		quickPeekRowHeadingIndex    () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowHeadingIndex) ? this.params.quickPeekConfig.rowHeadingIndex : 0; },
 		quickPeekRowSubHeadingIndex () { return (this.params.quickPeekConfig && this.params.quickPeekConfig.rowSubHeadingIndex) ? this.params.quickPeekConfig.rowSubHeadingIndex : 1; },
 		rowStripe                   () { return (this.params.rowStripe) ? 'is-striped' : ''; },
+		highlightHeader				() { return (this.params.highlightHeader) ? 'is-striped' : ''; },
 		highlightConfig             () { return (this.params.highlight && typeof this.params.highlight === 'object') ? this.params.highlight : {}; },
 		highlightedColor            () { return (this.params.highlightedColor && typeof this.params.highlightedColor === 'string') ? this.params.highlightedColor : '#000000'; },
 		headerInfirstRow            () { return !!(this.params.header === 'row');},
@@ -1040,9 +1043,13 @@ export default {
 		actionsClicked(rowIndex) {
 			//Hide visible popups
 			this.showAction = [];
-
-			this.showAction.includes(rowIndex) ? this.showAction.splice(this.showAction.indexOf(rowIndex), 1) : this.showAction.push(rowIndex);
-			this.visibleActions[rowIndex] = (this.visibleActions[rowIndex]) ? false : true;
+			if (this.actionsConfig.length === 1) {
+				let action = this.actionsConfig[0];
+				this.emitAction(action.func, rowIndex);
+			} else {
+				this.showAction.includes(rowIndex) ? this.showAction.splice(this.showAction.indexOf(rowIndex), 1) : this.showAction.push(rowIndex);
+				this.visibleActions[rowIndex] = (this.visibleActions[rowIndex]) ? false : true;
+			}
 		},
 		/**
 		 * @function - Handle action blur
