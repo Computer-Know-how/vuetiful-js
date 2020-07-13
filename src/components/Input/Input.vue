@@ -1,6 +1,6 @@
 <template>
   <div class="input__container" @mouseenter="hovering = true" @mouseleave="hovering = false" :style="{ backgroundColor: inputBackground }">
-    <input ref="input" :placeholder="placeholder" :type="type"
+    <input ref="input" :placeholder="placeholder" :type="type" :disabled="isDisabled"
       :class="`${placeholderEffect} ${prefixIcon ? 'prefix' : ''}`"
       :style="`color: ${inputColor}; border-color: ${borderColor}; min-width: ${inputWidth}px`"
       @input="handleInput"
@@ -39,7 +39,8 @@ export default {
 		inputBorderColorHovering: { type: String, default: '#C0C4CC' },
 		inputBorderColorFocused: { type: String, default: '#409EFF' },
 		prefixIcon: String,
-		suffixIcon: String
+		suffixIcon: String,
+		isDisabled: Boolean
 	},
 	computed: {
 		borderColor () {
