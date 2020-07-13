@@ -62,10 +62,10 @@ export default {
 	},
 	watch: {
 		$route (to, from) {
-			const fromRoute = this.$refs[`sidebar__item--${from.name}`][0];
-			const toRoute = this.$refs[`sidebar__item--${to.name}`][0];
-			if (fromRoute) fromRoute.classList.remove('active');
-			if (toRoute) toRoute.classList.add('active');
+			const fromRoute = this.$refs[`sidebar__item--${from.name}`];
+			const toRoute = this.$refs[`sidebar__item--${to.name}`];
+			if (fromRoute) fromRoute[0].classList.remove('active');
+			if (toRoute) toRoute[0].classList.add('active');
 		}
 	}
 };
