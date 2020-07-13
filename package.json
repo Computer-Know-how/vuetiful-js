@@ -41,7 +41,7 @@
     "dev": "node src/build/utils/generate-app-entry.js && vue-cli-service serve --open",
     "test": "echo \"Error: no test specified\" && exit 1",
     "public-rebase": "git fetch upstream master && git merge upstream/master",
-    "setup-remotes": "git checkout master && git remote remove origin && git remote remove upstream && git remote add upstream https://github.com/Computer-Know-how/vuetiful-js.git && git remote add origin ssh://git@stash.rbauction.com:7999/cus/vuetiful-js.git && git branch --set-upstream-to=origin/master master && git pull"
+    "setup-remotes": "git remote remove origin && git remote remove upstream && git remote add upstream https://github.com/Computer-Know-how/vuetiful-js.git && git remote add origin ssh://git@stash.rbauction.com:7999/cus/vuetiful-js.git && git branch --set-upstream-to=origin/master master && git pull"
   },
   "dependencies": {
     "axios": "^0.19.2",
