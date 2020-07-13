@@ -6,7 +6,7 @@
 				class="sidebar__item"
 				:class="(loadedPage === item.location || item.location === '/dashboard' && loadedPage == '/') ? 'active' : ''"
 				:id="`sidebar__item--${item.slug}`"
-				:ref="`sidebar__item--${item.slug}`"
+				ref="sidebarItems"
 				v-bind:key="item.slug"
 				v-show="!item.permissionLevel || userPermissionLevel >= item.permissionLevel"
 				@click="redirect(item.location, item.slug)"
@@ -62,10 +62,25 @@ export default {
 	},
 	watch: {
 		$route (to, from) {
-			const fromRoute = this.$refs[`sidebar__item--${from.name}`];
-			const toRoute = this.$refs[`sidebar__item--${to.name}`];
-			if (fromRoute) fromRoute[0].classList.remove('active');
-			if (toRoute) toRoute[0].classList.add('active');
+			const fromItem = this.$refs.sidebarItems.find(i => i.id == `sidebar__item--${from.name}`);
+			const toItem = this.$refs.sidebarItems.find(i => i.id == `sidebar__item--${to.name}`);
+
+			// If we know where we're going to and where we are coming from:
+			// 	remove "active" class on the "from" sidebar item
+			if (toItem && fromItem) fromItem.classList.remove('active');
+
+			// If we only know where we're going to:
+			// 	loop over all sidebar items and find active item then remove "active" class
+			// 	add the "active" class on the "to" sidebar item
+			if (toItem) {
+				this.$refs.sidebarItems.map(sidebarItem => {
+					if (sidebarItem.classList.contains('active')) {
+						sidebarItem.classList.remove('active');
+					}
+				});
+
+				toItem.classList.add('active');
+			}
 		}
 	}
 };
