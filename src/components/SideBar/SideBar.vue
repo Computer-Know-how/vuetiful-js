@@ -59,6 +59,14 @@ export default {
 		loadedPage: function () {
 			return this.$router.currentRoute.path;
 		}
+	},
+	watch: {
+		$route (to, from) {
+			const fromRoute = this.$refs[`sidebar__item--${from.name}`][0];
+			const toRoute = this.$refs[`sidebar__item--${to.name}`][0];
+			if (fromRoute) fromRoute.classList.remove('active');
+			if (toRoute) toRoute.classList.add('active');
+		}
 	}
 };
 </script>
