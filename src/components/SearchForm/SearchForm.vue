@@ -30,8 +30,9 @@
 		<search-checkbox @checkboxClicked="includeInactiveDocs = true" v-if="checkboxText">
 			<label slot="label">{{ checkboxText }}</label>
 		</search-checkbox>
-		<div class="btn__container dqm-pod__block" alignment="end">
-			<button right :class="button.class" class="dqm-btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)" btn-elevated> {{ button.text }} </button>
+		<div class="btn__container dqm-pod__block" alignment="start" direction="horizontal-reverse">
+			<button right class="dqm-btn --medium-outline clear-button" v-on:click="emitEvent('searchCleared'); reset = true; reset = false;">Clear</button>
+			<button right margin-r--md :class="button.class" class="dqm-btn" v-for="button of formButtons" :key="button.text" v-on:click="(button.func)(oFormFields)"> {{ button.text }} </button>
 		</div>
 	</div>
 </template>
@@ -46,11 +47,13 @@ export default {
 	name: 'search-form',
 	data() {
 		return {
-			includeInactiveDocs: false
+			includeInactiveDocs: false,
+			reset: false
 		};
 	},
 	computed: {
 		oFormFields: function() {
+			this.reset;
 			return this.formFields.reduce((agg, cur) => { agg[cur.slug] = ''; return agg; }, {});
 		},
 		oFieldSetsLabels: function() {

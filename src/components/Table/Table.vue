@@ -200,7 +200,7 @@
 								v-if="selectableRows"
 								:class="`table__select flex-c-c ${tableBorder}`">
 									<button
-										:class="`dqm-btn ${tableRow.selected ? 'is-selected --primary-outline' : '--primary'} flex-c-c`"
+										:class="`dqm-btn ${tableRow.selected ? 'is-selected --secondary-outline' : '--secondary'} flex-c-c`"
 										@click.stop="onSelectRow(tableRow, tableRow.index, tableRow.selected)">
 										{{ tableRow.selected ? 'Deselect' : 'Select' }}
 									</button>
