@@ -44,7 +44,7 @@
     "setup-remotes": "git remote remove origin && git remote remove upstream && git remote add upstream https://github.com/Computer-Know-how/vuetiful-js.git && git remote add origin ssh://git@stash.rbauction.com:7999/cus/vuetiful-js.git && git branch --set-upstream-to=origin/master master && git pull"
   },
   "dependencies": {
-    "axios": "^0.21.2",
+    "axios": "^1.6.0",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.3.0",
     "chart.js": "^2.9.4",
